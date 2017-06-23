@@ -1,7 +1,7 @@
 This is the latest revision of the Hilger teacher student grading form.  This is still a work in progress.  It is a complete rewrite of the current application.  For this version I am using a Material bootstrap admin dashboard theme.  Here are some of the key changes planned:
 
 
-  *Database Structure
+  * Database Structure
     - Instead of using one table to hold students and courses I have broken it up into two separate tables.  One table holds the students name and id.  Another table is just for classes.  When a teacher adds a class to a student, an entry in the courses table is created and assigned the students id as well as the teachers id and a unique course id.  This way we can look up courses by student or by teacher and we don't have an arbitrary number of courses for every student.  
 
     This should also eliminate any possible overwriting of data.  The previous model had 14 courses for each student and worked in a sort of lottery mode where when a teacher clicked on a student, the row for that student was checked and the next empty course was assigned to that teacher and their name was put into the teacher field for that course.  With the new model, when a teacher clicks on a student, if their are no courses assigned to that student/teacher combo, then a new one will be created.  If their are courses that match that teacher/student combo then they will be displayed.
