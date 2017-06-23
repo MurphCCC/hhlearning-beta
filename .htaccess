@@ -1,0 +1,10 @@
+RewriteEngine on
+
+RewriteBase /hhl-new/
+
+#RewriteCond %{REQUEST_URI} ^localhost/hhl-new(.*).[php|js|css|gif|jpg]$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^index?$ index.php
+RewriteRule ^edit/([0-9]+) editStudent.php?student_id=$1
