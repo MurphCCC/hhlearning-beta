@@ -13,9 +13,9 @@ require 'db-config.php';
 * A student_id will automatically be added.
 */
 
-if (isset($_GET['action']) && $_GET['action'] === 'add') {  //Add student to database
-  $fname = $_REQUEST['fname'];
-  $lname = $_REQUEST['lname'];
+if (isset($_POST['action']) && $_POST['action'] === 'add') {  //Add student to database
+  $fname = $_POST['fname'];
+  $lname = $_POST['lname'];
 
     try {
           $statement = $db_con->prepare("INSERT INTO students(first_name, last_name)

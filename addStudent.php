@@ -51,7 +51,7 @@ require 'inc/header.php';
 												<label for="lname">Last Name</label>
 											</div>
                       <div class="form-group">
-                        <button type="button" class="btn btn-success" id="submit">Submit</button>
+                        <button type="button" class="btn btn-success" id="addStudentSubmit">Submit</button>
 										</form>
                   </div>
 									</div><!--end .card-body -->
@@ -146,4 +146,34 @@ require 'inc/header.php';
 		</div><!--end #base-->
 		<!-- END BASE -->
 
-    <?php require 'inc/footer.php'; ?>
+		<script src="assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
+		<script src="assets/js/libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+		<script>
+
+
+
+
+		$("#addStudentSubmit").on('click', function() {
+		  var datastring = $("#add").serialize();
+		  function addStudent() {
+		    return $.ajax({
+		        type: "POST",
+		        url: "inc/processForm.php",
+		        data: 'action=add&' + datastring,
+		        success: function(data) {
+		          var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
+		          $("#success").html(card).fadeIn(5000);
+		          $("#success").delay(5000).fadeOut("slow");
+		          $("#add")[0].reset();
+		        },
+		        error: function() {
+		            alert('Sorry something went wrong');
+		        }
+		    });
+		  }
+			addStudent();
+			$.post('inc/listStudents.php');
+		});
+
+			</script>
+    <?php //require 'inc/footer.php'; ?>

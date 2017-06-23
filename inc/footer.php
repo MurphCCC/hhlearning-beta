@@ -93,7 +93,7 @@ $('#sections').on('click', '.remove', function() {
 //AddCourse function
 $(document).ready(function() {
     var teacher_id = <?php echo $_SESSION['teacher_id']; ?>;
-    var student_id = <?php echo $_REQUEST['student_id']; ?>;
+    var student_id = '<?php echo $_REQUEST['student_id']; ?>';
     var max_fields      = 10; //maximum input boxes allowed
     var wrapper         = $(".input_fields_wrap"); //Fields wrapper
     var add_button      = $(".add_field_button"); //Add button ID
@@ -172,7 +172,7 @@ $('input').keyup(function() {
 // //     }
 // //   })
 // // })
-$("#submit").on('click', function() {
+$("#addStudentSubmit").on('click', function() {
   var datastring = $("#add").serialize();
   function addStudent() {
     return $.ajax({
@@ -184,6 +184,7 @@ $("#submit").on('click', function() {
           $("#success").html(card).fadeIn(5000);
           $("#success").delay(5000).fadeOut("slow");
           $("#add")[0].reset();
+          alert('hello');
         },
         error: function() {
             alert('Sorry something went wrong');
