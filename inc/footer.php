@@ -232,46 +232,46 @@ $('input').keyup(function() {
     });
 // Submit our form for processing
 
-$("#editCourse").on('click', function() {
-  str = $("form").serialize();
-  alert(str);
-  $.ajax({
-      type: "POST",
-      url: "inc/processForm.php?action=editCourse&",
-      data: str,
-      success: function(data) {
-        var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
-        $("#success").html(card).fadeIn(5000);
-        $("#success").delay(5000).fadeOut("slow");
-        $("#addCourse")[0].reset();
-      },
-      error: function() {
-          alert('Sorry something went wrong');
-      }
-  });
-  console.log(str);
-})
+// $("#update").on('click', function() {
+//   str = $("form").serialize();
+//   alert(str);
+//   $.ajax({
+//       type: "POST",
+//       url: "inc/processForm.php?action=update&",
+//       data: str,
+//       success: function(data) {
+//         var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
+//         $("#success").html(card).fadeIn(5000);
+//         $("#success").delay(5000).fadeOut("slow");
+//         $("#addCourse")[0].reset();
+//       },
+//       error: function() {
+//           alert('Sorry something went wrong');
+//       }
+//   });
+//   console.log(str);
+// })
 
 
 
-$("#editCourse1").on('click', function() {
-  str = $("#edit1").serialize();
-  $.ajax({
-      type: "POST",
-      url: "inc/processForm.php?action=editCourse&",
-      data: str,
-      success: function(data) {
-        var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
-        $("#success").html(card).fadeIn(5000);
-        $("#success").delay(5000).fadeOut("slow");
-        $("#addCourse")[0].reset();
-      },
-      error: function() {
-          alert('Sorry something went wrong');
-      }
-  });
-  console.log(str);
-})
+// $("#editCourse1").on('click', function() {
+//   str = $("#edit1").serialize();
+//   $.ajax({
+//       type: "POST",
+//       url: "inc/processForm.php?action=editCourse&",
+//       data: str,
+//       success: function(data) {
+//         var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
+//         $("#success").html(card).fadeIn(5000);
+//         $("#success").delay(5000).fadeOut("slow");
+//         $("#addCourse")[0].reset();
+//       },
+//       error: function() {
+//           alert('Sorry something went wrong');
+//       }
+//   });
+//   console.log(str);
+// })
 $("#addCourse").on('click', function() {
   var datastring = $("#courseForm").serialize();
   function addCourse() {
