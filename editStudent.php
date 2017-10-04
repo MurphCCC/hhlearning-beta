@@ -11,6 +11,14 @@ $stmt->execute();
 
 $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$sql = 'SELECT * FROM `students` WHERE `student_id` = :sid';
+$st = $db_con->prepare($sql);
+$st->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
+$st->execute();
+
+$s = $st->fetchAll(PDO::FETCH_ASSOC);
+print_r($s);
+$name = print_r($s);
 
 ?>
 
@@ -30,8 +38,11 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 					</div><!--end .section-header -->
 					<div class="section-body">
 						<button type="button" class="btn btn-info addsection">Add a blank course</button>
+						<!-- sheepIt Form -->
 
-						<?php  if(sizeof($courses) === 0) {
+						<?php  
+						//sizeof($courses) should return then number of courses a student has been assigned.  If this number is 0, then we want to display a form, and when the teacher submits it, it should create the first course for this student/teacher combo, else we should have an edit button for each entry.
+						if(sizeof($courses) === 0) {
 							addCourse();
 						} else {
 							$i = 0;
@@ -40,7 +51,7 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<!-- BEGIN INTRO -->
 								<div class="row">
 									<div class="col-lg-12">
-										<h1 class="text-primary">Edit a Course</h1>
+										<h1 class="text-primary">'.$name.'</h1>
 									</div><!--end .col -->
 									<div class="col-lg-8">
 										<article class="margin-bottom-xxl">
@@ -51,7 +62,6 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 									</div><!--end .col -->
 								</div><!--end .row -->
 								<!-- END INTRO -->
-
 								<!-- BEGIN BASIC ELEMENTS -->
 								<div class="row">
 								<div id="sections">
@@ -67,19 +77,19 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 												</div>
 													<div class="form-group">
-														<input type="text" name="cname[]" class="form-control" id="cname" value="'.$c['course_name'].'">
+														<input type="text" name="cname[]'.$i.'" class="form-control" id="cname" value="'.$c['course_name'].'">
 														<label for="cname">Course Name</label>
 													</div>
 													<div class="form-group">
-														<input type="text" name="cgrade[]" class="form-control" id="cgrade" value="'.$c['grade'].'">
+														<input type="text" name="cgrade[]'.$i.'" class="form-control" id="cgrade" value="'.$c['grade'].'">
 														<label for="cgrade">Course Grade</label>
 													</div>
 													<div class="form-group">
-														<textarea name="feedback[]" rows="4" class="form-control" id="feedback" value="'.$c['feedback'].'">'.$c['feedback'].'</textarea>
+														<textarea name="feedback[]'.$i.'" rows="4" class="form-control" id="feedback" value="'.$c['feedback'].'">'.$c['feedback'].'</textarea>
 														<label for="feedback">Feedback</label>
 													</div>
 													<div class="form-group">
-														<button type="button" class="btn btn-success" name="submit[]" id="editCourse">Submit</button>
+														<button type="button" class="btn btn-success" name="edit'.$c['id'].'" id="editCourse'.$c['id'].'"">Edit Course</button>
 												</form>
 											</div>
 											</div><!--end .card-body -->
@@ -95,14 +105,19 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								<!-- END BASIC ELEMENTS -->
 
 
-								</div><!--end .section-body -->
-								</div>
+
 								';
 								$i++;
 							}
 						}
 						?>
+
+  <!-- /Controls -->
+
+</div>
+<!-- /sheepIt Form -->
 					</div>
+				</div>
 				</section>
 
 
@@ -185,5 +200,6 @@ $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 			<!-- END OFFCANVAS RIGHT -->
 
 		</div><!--end #base-->
+
 		<!-- END BASE -->
 		<?php require 'inc/footer.php'; ?>

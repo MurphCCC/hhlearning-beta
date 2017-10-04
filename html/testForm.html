@@ -1,0 +1,86 @@
+<html>
+<head>
+
+<script type="text/javascript" src="../assets/js/libs/jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.sheepItPlugin-1.1.1.min.js"></script>
+
+
+
+</head>
+
+<body>
+
+  <!-- sheepIt Form -->
+<div id="editCourses">
+  <input type="hidden" name="student_id" value="12">
+  <input type="hidden" name="teacher_id" value="1">
+  <!-- Form template-->
+  <div id="editCourses_template">
+    <input type="hidden" id="editCourses_#index#_courseId" name="person[phones][#index#][courseId]"/>
+    <label for="editCourses_#index#_phone">Name <span id="editCourses_label"></span></label>
+    <input id="editCourses_#index#_phone" name="person[phones][#index#][phone]" type="text"/>
+
+    <label for="editCourses_#index#_phone">Grade <span id="editCourses_label"></span></label>
+    <input id="editCourses_#index#_grade" name="person[phones][#index#][grade]" type="text"/>
+
+    <label for="editCourses_#index#_phone">Feedback <span id="editCourses_label"></span></label>
+    <input id="editCourses_#index#_grade" name="person[phones][#index#][grade]" type="text"/>
+
+    <a id="editCourses_remove_current">
+      <img class="delete" src="images/cross.png" width="16" height="16" border="0">
+    </a>
+  </div>
+  <!-- /Form template-->
+
+  <!-- No forms template -->
+  <div id="editCourses_noforms_template">No courses</div>
+  <!-- /No forms template-->
+
+  <!-- Controls -->
+  <div id="editCourses_controls">
+    <div id="editCourses_add"><a><span>Add Course</span></a></div>
+    <div id="editCourses_remove_last"><a><span>Remove course</span></a></div>
+    <div id="editCourses_remove_all"><a><span>Remove all courses</span></a></div>
+    <div id="editCourses_add_n">
+      <input id="editCourses_add_n_input" type="text" size="4" />
+      <div id="editCourses_add_n_button"><a><span>Add</span></a></div></div>
+  </div>
+  <!-- /Controls -->
+
+</div>
+<!-- /sheepIt Form -->
+
+<script>
+$(document).ready(function() {
+
+    var sheepItForm = $('#editCourses').sheepIt({
+        separator: '',
+        allowRemoveLast: true,
+        allowRemoveCurrent: true,
+        allowRemoveAll: true,
+        allowAdd: true,
+        allowAddN: true,
+        maxFormsCount: 10,
+        minFormsCount: 0,
+        iniFormsCount: 2,
+        data: [
+          {
+            '#form#_#index#_phone': '12'
+          },
+          {
+            '#form#_#index#_phone': '13'
+          },
+          {
+            '#form#_#index#_phone': '14'
+          },
+          {
+            '#form#_#index#_phone': '15'
+          }
+        ]
+    });
+
+});
+</script>
+</body>
+
+</html>

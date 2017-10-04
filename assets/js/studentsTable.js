@@ -34,69 +34,6 @@
 		this._adminTable();
 	};
 
-
-	p._adminTable = function() {
-    // var editTag = '<a href="edit.php?student_id">'
-		var table = $('#adminTable').DataTable({
-			"dom": 'T<"clear">lfrtip',
-			"ajax": 'assets/students.json',
-			"columns": [
-        {"data": "first_name"},
-        {"data": "last_name"},
-				{
-					"class": 'edit-student',
-					"orderable": false,
-					"data": null,
-					"defaultContent": '<button type="button" class="btn ink-reaction btn-raised btn-lg btn-primary" id="edit">Edit Student</button>'
-				},
-				{
-					"class": 'delete-student',
-					"orderable": false,
-					"data": null,
-					"defaultContent": '<button type="button" class="btn ink-reaction btn-raised btn-lg btn-danger" id="delete">Delete Student</button>'
-				},
-
-
-			],
-			"tableTools": {
-				"sSwfPath": $('#adminTable').data('swftools')
-			},
-			"order": [[1, 'asc']],
-			"language": {
-				"lengthMenu": '_MENU_ students per page',
-				"search": '<i class="fa fa-search"></i>',
-				"paginate": {
-					"previous": '<i class="fa fa-angle-left"></i>',
-					"next": '<i class="fa fa-angle-right"></i>'
-				}
-			}
-		});
-
-		//Add event listener for opening and closing details
-		var o = this;
-
-		$('#adminTable tbody').on('click', 'td.edit-student', function() {
-			var tr = $(this).closest('tr');
-			var row = table.row(tr);
-
-			if (row.child.isShown()) {
-				// This row is already open - close it
-				row.child.hide();
-				tr.removeClass('shown');
-			}
-			else {
-				// Open this row
-				row.child(o._formatDetails(row.data())).show();
-				tr.addClass('shown');
-			}
-		});
-
-		$('#adminTable tbody').on('click', 'td.delete-student', function() {
-
-			alert('hello there');
-		});
-	};
-
 	p._teacherTable = function() {
 		// var editTag = '<a href="edit.php?student_id">'
 		var table = $('#teacherTable').DataTable({
@@ -151,6 +88,68 @@
 		});
 	};
 
+
+	p._adminTable = function() {
+		// var editTag = '<a href="edit.php?student_id">'
+		var table = $('#adminTable').DataTable({
+			"dom": 'T<"clear">lfrtip',
+			"ajax": 'assets/students.json',
+			"aoColumns": [{
+						"mData":"first_name",
+						"sTitle": "First Name"
+					},{
+						"mData": "last_name", //mData must correspond to a key/value in our students.json file.
+						"sTitle": "Last Name" //sTitle is the name we wish to give to our column in the table
+					},{
+						"mData": "student_id",
+						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
+							return  '<a href="./editStudent.php?student_id='+url+'">' + url + '</a>';
+						}
+					},{
+						"sTitle": "action",
+						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
+							return  '<a href="./editStudent.php?student_id='+url+'">' + url + '</a>';
+						}
+					},
+				],
+			"tableTools": {
+				"sSwfPath": $('#teacherTable').data('swftools')
+			},
+			"order": [[1, 'asc']],
+			"language": {
+				"lengthMenu": '_MENU_ students per page',
+				"search": '<i class="fa fa-search"></i>',
+				"paginate": {
+					"previous": '<i class="fa fa-angle-left"></i>',
+					"next": '<i class="fa fa-angle-right"></i>'
+				}
+			}
+		});
+
+		//Add event listener for opening and closing details
+		var o = this;
+
+		$('#teacherTable tbody').on('click', 'td.edit-student', function() {
+			var tr = $(this).closest('tr');
+			var row = table.row(tr);
+
+			if (row.child.isShown()) {
+				// This row is already open - close it
+				row.child.hide();
+				tr.removeClass('shown');
+			}
+			else {
+				// Open this row
+				row.child(o._formatDetails(row.data())).show();
+				tr.addClass('shown');
+			}
+		});
+
+		$('#adminTable tbody').on('click', 'td.delete-student', function() {
+
+			alert('hello there');
+		});
+	};
 	// =========================================================================
 	// DETAILS
 	// =========================================================================

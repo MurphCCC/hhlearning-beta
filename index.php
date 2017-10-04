@@ -43,6 +43,7 @@ require 'inc/header.php';
 											<tr>
 												<th>First Name</th>
 												<th>Last Name</th>
+												<th>Student ID</th>
 												<th>Actions</th>
 												<th></th>
 											</tr>

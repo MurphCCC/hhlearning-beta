@@ -1,0 +1,63 @@
+<html>
+<head>
+</head>
+<body>
+
+<table id="example">
+  <thead>
+    <tr><th class="site_name">Name</th><th>Delete </th><th>Type</th><th>Last modified</th></tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+<script src="./libs/jquery/jquery-1.11.2.min.js"></script>
+<script src="./libs/jquery/jquery-migrate-1.2.1.min.js"></script>
+<script src="./libs/bootstrap/bootstrap.min.js"></script>
+<script src="./libs/spin.js/spin.min.js"></script>
+<script src="./libs/autosize/jquery.autosize.min.js"></script>
+<script src="./libs/DataTables/jquery.dataTables.min.js"></script>
+<script src="./libs/DataTables/extensions/ColVis/js/dataTables.colVis.min.js"></script>
+<script src="./libs/DataTables/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script src="./libs/nanoscroller/jquery.nanoscroller.min.js"></script>
+<script src="./core/source/App.js"></script>
+<script src="./core/source/AppNavigation.js"></script>
+<script src="./core/source/AppOffcanvas.js"></script>
+<script src="./core/source/AppCard.js"></script>
+<script src="./core/source/AppForm.js"></script>
+<script src="./core/source/AppNavSearch.js"></script>
+<script src="./core/source/AppVendor.js"></script>
+<script src="./core/demo/Demo.js"></script>
+<script src="./studentsTable.js"></script>
+
+
+
+<script>
+$("#example").dataTable({
+  "aaData":[
+    ["Sitepoint","1","Blog","2013-10-15 10:30:00"],
+    ["Flippa","12","Marketplace","null"],
+    ["99designs","34","Marketplace","null"],
+    ["Learnable","32","Online courses","null"],
+    ["Rubysource","19","Blog","2013-01-10 12:00:00"]
+  ],
+  "aoColumnDefs":[{
+        "sTitle":"Site name"
+      , "aTargets": [ "site_name" ]
+  },{
+        "aTargets": [ 1 ]
+      , "bSortable": false
+      , "mRender": function ( id, type, full )  {
+          return  '<a href="'+id+'">' + 'Delete Student' + '</a>';
+      }
+  },{
+        "aTargets":[ 3 ]
+      , "sType": "date"
+      , "mRender": function(date, type, full) {
+          return (full[2] == "Blog")
+                    ? new Date(date).toDateString()
+                    : "N/A" ;
+      }
+  }]
+});
+</script>

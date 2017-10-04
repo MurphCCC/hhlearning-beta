@@ -3,7 +3,7 @@ require 'db-config.php';
 
 //If we don't have a variable set, then make user a teacher by default.
 include('functions.php');
-$_SESSION['teacher_id'] = 2;
+$_SESSION['teacher_id'] = 1;
 // Get our teacher's information from the database, we will use this for all the students courses.
 $sql = 'SELECT `first_name`, `last_name` FROM `teachers` WHERE `teacher_id` = :id';
 $stmt = $db_con->prepare($sql);

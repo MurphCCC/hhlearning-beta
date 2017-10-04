@@ -47,14 +47,18 @@
 
 <script>
 //define template
+//This script is what gets executed when trying to add another course to the page.  We need to figure out a way to automate
+//this but also to increment the id of the form.  Basically, I need a way to be able to add forms to the page dynamically and process
+//them all individually.
 var template = $('#sections .section:first').clone();
+
+var student_id = "<?php echo $c['id'];?>";
 
 //define counter
 var sectionsCount = 1;
 
 //add new section
 $('body').on('click', '.addsection', function() {
-
     //increment
     sectionsCount++;
 
@@ -65,10 +69,17 @@ $('body').on('click', '.addsection', function() {
         var newId = this.id + sectionsCount;
 
         //update for label
-        $(this).prev().attr('for', newId);
+        // $(this).prev().attr("value", );
 
-        //update id
-        this.id = newId;
+        //update name and id
+
+          this.name = newId;
+          this.id = newId;
+          var test = $("input[name=student_id2]:hidden");
+          test.val('work!');
+          // $("#student_id2").val(2);
+
+
 
         //Clear out each input value so that our cloned form is blank
         $(this).attr('value', '');
@@ -224,26 +235,24 @@ $('input').keyup(function() {
 $("#editCourse").on('click', function() {
   str = $("form").serialize();
   alert(str);
-  // $.ajax({
-  //     type: "POST",
-  //     url: "inc/processForm.php?action=editCourse&",
-  //     data: str,
-  //     success: function(data) {
-  //       var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
-  //       $("#success").html(card).fadeIn(5000);
-  //       $("#success").delay(5000).fadeOut("slow");
-  //       $("#addCourse")[0].reset();
-  //     },
-  //     error: function() {
-  //         alert('Sorry something went wrong');
-  //     }
-  // });
-  // console.log(str);
+  $.ajax({
+      type: "POST",
+      url: "inc/processForm.php?action=editCourse&",
+      data: str,
+      success: function(data) {
+        var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
+        $("#success").html(card).fadeIn(5000);
+        $("#success").delay(5000).fadeOut("slow");
+        $("#addCourse")[0].reset();
+      },
+      error: function() {
+          alert('Sorry something went wrong');
+      }
+  });
+  console.log(str);
 })
 
-$("editCourse2").on('click', function() {
-  alert('button 2');
-});
+
 
 $("#editCourse1").on('click', function() {
   str = $("#edit1").serialize();
