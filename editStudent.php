@@ -17,34 +17,39 @@ $st->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
 $st->execute();
 
 $s = $st->fetchAll(PDO::FETCH_ASSOC);
-print_r($s);
-$name = print_r($s);
+var_dump($s);
 
-if(isset($_POST['update'])) {
-    echo "Update " . $_POST['id_update'] . $_POST['course_name'] . $_POST['grade'] . $_POST['feedback'] . '<-- This is the result of clicking update for each row';
-
-
-    $sql = "UPDATE courses SET course_name = :course_name, 
-            grade = :grade, 
-            feedback = :feedback   
-            WHERE id = :id";
-        $stmt = $db_con->prepare($sql);                                  
-        $stmt->bindParam(':course_name', $_POST['course_name'], PDO::PARAM_STR);       
-        $stmt->bindParam(':grade', $_POST['grade'], PDO::PARAM_STR);    
-        $stmt->bindParam(':feedback', $_POST['feedback'], PDO::PARAM_STR);   
-        $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);   
-        $stmt->execute();
-} //end of isset update
 
     function UserForm($customers = array())
         { 
+        	global $name;
             ob_start(); ?>
+            <div class="row">
+			 	<div class="col-lg-12">
+			 		<h1 class="text-primary"><?php echo $name; ?></h1>
+			 	</div><!--end .col -->
+			 	<div class="col-lg-8">
+			 		<article class="margin-bottom-xxl">
+			 			<p class="lead">
+			 				
+			 			</p>
+			 		</article>
+			 	</div><!--end .col -->
+			 </div><!--end .row -->
+			 <!-- END INTRO -->
+			 <!-- BEGIN BASIC ELEMENTS -->
+			 <div class="row">
+			 <div id="sections">
+			 <div class="section">
+			 	<div class="col-lg-offset-1 col-md-10 col-sm-6" >
+			 		<div class="card">
+			 			<div class="card-body">
             <form action="" method="POST"><?php
                 $ID = $customers['id']; ?>
                 <tr>
-                    <td><input type="text" name="course_name" value="<?php echo $customers['course_name']; ?>"></td>
-                    <td><input type="text" name="grade" value="<?php echo $customers['grade']; ?>"</td>
-                    <td><input type="text" name="feedback" value="<?php echo $customers['feedback']; ?>"</td>
+                    <td><input type="text" class="form-control" name="course_name" value="<?php echo $customers['course_name']; ?>"></td>
+                    <td><input type="text" class="form-control" name="grade" value="<?php echo $customers['grade']; ?>"</td>
+                    <td><input type="text" class="form-control" name="feedback" value="<?php echo $customers['feedback']; ?>"</td>
                     <td align="center">
                         <input type="hidden" name="id" value="<?php echo $ID; ?>">
                         <input type="submit" name="delete" value="X">
@@ -58,6 +63,18 @@ if(isset($_POST['update'])) {
                     </td>
                 </tr>
             </form>
+
+            </div>
+ 			</div><!--end .card-body -->
+
+ 		</div><!--end .card -->
+
+ 	</div><!--end .col -->
+ 	<div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
+
+ </div><!--end .row -->
+ </div>
+ </div>
             <?php
             $data   =   ob_get_contents();
             ob_end_clean();

@@ -1,0 +1,76 @@
+.widget li {
+	padding: 0px 0;
+}
+
+.page div.entry-content p {
+    margin: -10px 0 40px;
+    /* font-family: "Athiti", sans-serif; */
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    font-size: 15px;
+    line-height: 23px;
+    color: #b3b1b1;
+    font-size: 1.85em;
+}
+
+.erm_menu:not(.type-erm_menu) {
+    /* border-top: 6px solid black; */
+    /* margin: 30px 0px; */
+    margin: 30px 0px;
+    background: rgba(209, 180, 134, 0.65);
+    background: rgba(109, 107, 105, 0.96)
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 20px !important;
+    border-radius: 10px;
+}
+
+.erm_product_desc {
+    font-size: 12px;
+    padding-left: 150px;
+    color: #ababab;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #dadada;
+    font-family: "Playfair Display", serif;
+}
+
+
+http://192.168.11.177/cafe_wordpress/wp-content/uploads/2017/10/wood-plank-background.jpg
+
+
+.site-content {
+    /* margin-bottom: 30px; */
+    margin-bottom: 30px;
+    background-image: url(http://192.168.11.177/cafe_wordpress/wp-content/uploads/2017/10/wood-plank-background.jpg);
+    -webkit-clip-path: polygon(0 93%, 101% 100%, 100% 2%, 46% 7%, 0% 0%);
+    clip-path: polygon(0 93%, 101% 100%, 100% 2%, 46% 7%, 0% 0%);
+}
+
+.site-header {
+    background: url(http://192.168.11.177/cafe_wordpress/wp-content/uploads/2017/10/cropped-m58logo-1-1.jpg) no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    background-size: cover;
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 90%, 47% 100%, 0 81%);
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 47% 100%, 0 81%);
+}
+
+.page .hentry {
+    background-color: rgba(0, 0, 0, 0.49);
+}
+
+
+/*    Styling for displaying on the TV    */
+
+/*    Extend our left most menu to match the right most menu off the screen.    */
+div#erm_menu-id-8 {
+    position: relative;
+    height: 73em;
+}
+
+/*    Bring our burger menu down to bottom of page    */
+div#erm_menu-id-31 {
+    position: relative;
+    bottom: -8em;
+}

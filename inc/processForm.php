@@ -13,19 +13,19 @@ require 'db-config.php';
 * A student_id will automatically be added.
 */
 
-if (isset($_POST['action']) && $_POST['action'] === 'deleteStudent') {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'deleteStudent') {
   try {
-    $q = $db_con->prepare("DELETE FROM students WHERE `student_id` = :id");
-    $q->bindParam(':id', $_REQUEST['student_id']);
+    $q = $db_con->prepare("DELETE FROM `students` WHERE `student_id` = :id");
+    $q->bindValue(':id', $_REQUEST['student_id']);
     $q->execute();
   } catch(PDOException $e) {
       echo $e->getMessage();
   }
   echo 'Student deleted successfully';
 }
-if (isset($_POST['action']) && $_POST['action'] === 'add') {  //Add student to database
-  $fname = $_POST['fname'];
-  $lname = $_POST['lname'];
+if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'add') {  //Add student to database
+  $fname = $_REQUEST['fname'];
+  $lname = $_REQUEST['lname'];
 
     try {
           $statement = $db_con->prepare("INSERT INTO students(first_name, last_name)
