@@ -311,6 +311,12 @@ $("#addCourse").on('click', function() {
 })
 
 
+    // $(document).on('click', ".deleteLink", function(){
+
+    //  var decDate = $(this).find('input').val();
+
+    //  alert(decDate);
+    // });
 </script>
 </body>
 </html>

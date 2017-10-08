@@ -1,113 +1,105 @@
-<?php
-
-    /*
-    * This is an example of a form with multiple fields, each one with its own update/submit button.
-    */
-    function UserForm($customers = array())
-        { 
-            ob_start(); ?>
-            <form action="" method="post"><?php
-                $ID = $customers['id']; ?>
-                <tr>
-                    <td><input type="text" name="course_name" value="<?php echo $customers['course_name']; ?>"></td>
-                    <td><input type="text" name="grade" value="<?php echo $customers['grade']; ?>"</td>
-                    <td><input type="text" name="feedback" value="<?php echo $customers['feedback']; ?>"</td>
-                    <td align="center">
-                        <input type="hidden" name="id" value="<?php echo $ID; ?>">
-                        <input type="submit" name="delete" value="X">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="8">
-                    <input type="hidden" name="id_update" value="<?php echo $ID; ?>" />
-                    <input type="submit" name="update" value="Edit Course" />
-                    <?php echo $ID; ?><--This is the ID for each row -->
-                    </td>
-                </tr>
-            </form>
-            <?php
-            $data   =   ob_get_contents();
-            ob_end_clean();
-            return $data;
-        } ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
-<table class="table table-striped table-bordered table-responsive">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-<?php
-$pdo    =   new PDO("mysql:host=localhost;dbname=hhlearning_grades", "hhlearning_grades", "Romans:33#", array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-$query  =   $pdo->prepare("select * from courses");
-$query->execute();
+<!-- Present this form to the user for any course that is already existing -->
+<form class="allforms" method="POST" action="">
+    Grade<input type="text" name="grade" value="'.$c['grade'].'"></input>
+    Course<input type="text" name="course_name" value="'.$c['course_name'].'"></input>
+    Feedback<textarea name="feedback">'.$c['course_name'].'</textarea>
+    <input type="hidden" name="student_id" value="1"></input>
+    <input type="hidden" name="teacher_id" value="1">
+    <input type="hidden" name="id" value="11"></input>
+    <input type="hidden" name="update" value="true"></input>
 
-while($customers = $query->fetch()){
-    echo UserForm($customers);
-}
-
-// Delete customer
-if(isset($_POST['delete'])) {
-    try{
-            $ID     =   $_POST['id'];
-            $query  =   $pdo->prepare("DELETE FROM `courses` where id = :ID");
-            $query->bindParam('id', $ID);
-            $query->execute(array('id' => $ID));
-            echo "Grades successfully deleted.";
-            echo '<META http-equiv="refresh" content="1;URL=view_edit.php">';
-        }catch(PDOException $e){
-            echo "Failed to delete the MySQL database table ... :".$e->getMessage();
-        } //end of try
-    } //end of isset delete
-
-// Logic to Edit student grades.
-if(isset($_POST['update'])) {
-    // echo "Update " . $_POST['id_update'] . $_POST['course_name'] . $_POST['grade'] . $_POST['feedback'] . '<-- This is the result of clicking update for each row';
+  <input type="submit" />
+</form>
 
 
-    $sql = "UPDATE courses SET course_name = :course_name, 
-            grade = :grade, 
-            feedback = :feedback   
-            WHERE id = :id";
-        $stmt = $pdo->prepare($sql);                                  
-        $stmt->bindParam(':course_name', $_POST['course_name'], PDO::PARAM_STR);       
-        $stmt->bindParam(':grade', $_POST['grade'], PDO::PARAM_STR);    
-        $stmt->bindParam(':feedback', $_POST['feedback'], PDO::PARAM_STR);   
-        $stmt->bindParam(':id', $_POST['id'], PDO::PARAM_INT);   
-        $stmt->execute();
-} //end of isset update
+<br />
+<!-- Present this form to the user when they need to add a new course into the database -->
 
-?>
-</table>
+<form class="allforms" method="POST" action="">
+    Grade<input type="text" name="grade" value="90"></input>
+    Course<input type="text" name="course_name" value="Science"></input>
+    Feedback<textarea name="feedback">jhakdfhka fhjka kflj dakjf as</textarea>
+    <input type="hidden" name="student_id" value="1"></input>
+    <input type="hidden" name="teacher_id" value="1">
+    <input type="hidden" name="course_id" value=""></input>
+    <input type="hidden" name="create" value="true"></input>
 
 
-<?php
+  <input type="submit" />
+</form>
 
-    if (isset($_POST['test'])) {
-        //Note the prepare on the outside.
-        $stmt = $conn->prepare("UPDATE `courses` SET `course_name` = :course_name,
-        `grade` = :grade,
-        `feedback` = :feedback
-         WHERE `id` = :id");
-        //As well as the binding. By using bindParam, and supplying a variable, we're passing it by reference.
-        //So whenever it changes, we don't need to bind again.
-        $stmt->bindParam(":course_name", $_REQUEST['course_name'], PDO::PARAM_STR);
-        $stmt->bindParam(":grade", $_REQUEST['grade'], PDO::PARAM_STR);
-        $stmt->bindParam(":feedback", $_REQUEST['feedback'], PDO::PARAM_STR);
-        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+<br />
+<button id="allsubmit" class="btn btn-info">Continue</button>
 
-        foreach ($_POST['course_name'] as $index => $comment) {
+<script>
+    $(function() {
+    $("#allsubmit").click(function(){
+        $('.allforms').each(function(){
+            valuesToSend = $(this).serialize();
+            alert($(this).serialize());
+            $.ajax($(this).attr('action'),
+                {
+                method: $(this).attr('method'),
+                data: valuesToSend,
+                type: "POST",
+                url: "testFormProcess.php"
+                }
+            )
+        });
+    });
+});
+</script>
 
-            //All that's left is to set the ID, see how we're reusing the $index of the comment input?
 
-            $id = $_POST['id'][$index];
-
-            $stmt->execute();
-
-        }
-    }
-?>
+<div class="row">
+                                    <div class="col-lg-12">
+                                        <h1 class="text-primary">'.$name.'</h1>
+                                    </div><!--end .col -->
+                                    <div class="col-lg-8">
+                                        <article class="margin-bottom-xxl">
+                                            <p class="lead">
+                                                Enter students first and last name and click \'Submit\'
+                                            </p>
+                                        </article>
+                                    </div><!--end .col -->
+                                </div><!--end .row -->
+                                <!-- END INTRO -->
+                                <!-- BEGIN BASIC ELEMENTS -->
+                                <div class="row">
+                                <div id="sections">
+                                <div class="section">
+                                    <div class="col-lg-offset-1 col-md-10 col-sm-6" >
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <form class="form" id="edit" action="">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="teacher_id" class="form-control" id="teacher_id" value="'. $_SESSION['teacher_id'] .'">
+                                                    <input type="hidden" name="student_id" class="form-control" id="student_id" value="'. $_REQUEST['student_id'] .'">
+                                                    <input type="hidden" name="course_id[]" class="form-control" id="course_id" value="'.$c['id'].'">
+                                                </div>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cname[]'.$i.'" class="form-control" id="cname" value="'.$c['course_name'].'">
+                                                        <label for="cname">Course Name</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" name="cgrade[]'.$i.'" class="form-control" id="cgrade" value="'.$c['grade'].'">
+                                                        <label for="cgrade">Course Grade</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <textarea name="feedback[]'.$i.'" rows="4" class="form-control" id="feedback" value="'.$c['feedback'].'">'.$c['feedback'].'</textarea>
+                                                        <label for="feedback">Feedback</label>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="button" class="btn btn-success" name="edit'.$c['id'].'" id="editCourse'.$c['id'].'"">Edit Course</button>
+                                                </form>
+                                            </div>
+                                            </div><!--end .card-body -->
+                                        </div><!--end .card -->
+                                    </div><!--end .col -->
+                                    <div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
+                                </div><!--end .row -->
+                                </div>
+                                </div>

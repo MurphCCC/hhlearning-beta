@@ -82,19 +82,20 @@
 			}
 		});
 
-		$('#adminTable tbody').on('click', 'td.delete-student', function() {
-
-			alert('hello there');
+			$('#adminTable tbody').on('click', 'td.deleteStudent', function() {
+				alert('You clicked delete');
 		});
 	};
 
 
 	p._adminTable = function() {
-		// var editTag = '<a href="edit.php?student_id">'
+
+
 		var table = $('#adminTable').DataTable({
 			"dom": 'T<"clear">lfrtip',
 			"ajax": 'assets/students.json',
-			"aoColumns": [{
+			"aoColumns": [
+					{
 						"mData":"first_name",
 						"sTitle": "First Name"
 					},{
@@ -102,13 +103,11 @@
 						"sTitle": "Last Name" //sTitle is the name we wish to give to our column in the table
 					},{
 						"mData": "student_id",
+						"className": "deleteStudent",
 						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
-							return  '<a href="./editStudent.php?student_id='+url+'">' + url + '</a>';
-						}
-					},{
-						"sTitle": "action",
-						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
-							return  '<a href="./editStudent.php?student_id='+url+'">' + url + '</a>';
+							var student_id = url;
+							// return '<a id="deleteStudent" href="inc/processForm.php?action=deleteStudent&student_id='+url+'">Delete Student</a>';
+							return '<a data-hidden="'+url+'" class="deleteLink" id="delete" value="'+url+'">Delete</a>';
 						}
 					},
 				],
@@ -129,26 +128,41 @@
 		//Add event listener for opening and closing details
 		var o = this;
 
-		$('#teacherTable tbody').on('click', 'td.edit-student', function() {
-			var tr = $(this).closest('tr');
-			var row = table.row(tr);
+		function test(url) {
+			alert('hello',url);
+		}
 
-			if (row.child.isShown()) {
-				// This row is already open - close it
-				row.child.hide();
-				tr.removeClass('shown');
-			}
-			else {
-				// Open this row
-				row.child(o._formatDetails(row.data())).show();
-				tr.addClass('shown');
-			}
+				//Listen confirm deletion of student then send post to form processing
+				$('#adminTable tbody').on('click', '.deleteLink', function() {
+
+					var student_id = $(this).data('hidden');
+					
+					if (confirm("Are you sure you want to delete this student?") == true) {
+					        $.ajax({
+						        type: "POST",
+						        url: "inc/processForm.php?action=deleteStudent&student_id=" + student_id,
+						        success: function(data) {
+
+						 		    var sucMesg = function(data) {
+						 		    	alert(data);
+						 		    	location.reload();
+						 		    }
+						          return sucMesg(data);
+
+						        },
+						        error: function(data) {
+						            alert('Sorry something went wrong');
+						        }
+						    });
+					} else {
+					    txt = "No changes have been made";
+					}
+				
 		});
 
-		$('#adminTable tbody').on('click', 'td.delete-student', function() {
 
-			alert('hello there');
-		});
+
+
 	};
 	// =========================================================================
 	// DETAILS
@@ -173,6 +187,13 @@
 		// 		'</table>';
 	};
 
+
+
 	// =========================================================================
 	namespace.DemoTableDynamic = new DemoTableDynamic;
 }(this.materialadmin, jQuery)); // pass in (namespace, jQuery):
+
+
+$('#adminTable tbody').on('click', 'td.deleteStudent', function () {
+	confirm("Delete Student?");
+    } );

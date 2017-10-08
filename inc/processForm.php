@@ -18,10 +18,23 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'deleteStudent') {
     $q = $db_con->prepare("DELETE FROM `students` WHERE `student_id` = :id");
     $q->bindValue(':id', $_REQUEST['student_id']);
     $q->execute();
+
+    $sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students` LIMIT 500';
+$stmt = $db_con->prepare($sql);
+$stmt->execute();
+// $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
+
+$students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+$student_list = array('data' => $students);
+
+file_put_contents('../assets/students.json', json_encode($student_list)); 
   } catch(PDOException $e) {
       echo $e->getMessage();
   }
-  echo 'Student deleted successfully';
+    echo 'Student deleted sucessfully';
+
 }
 if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'add') {  //Add student to database
   $fname = $_REQUEST['fname'];

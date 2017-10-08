@@ -1,86 +1,19 @@
 <?php
 require 'inc/header.php';
 require 'inc/db-config.php';
-
 $sql = 'SELECT * FROM `courses` WHERE `teacher_id` = :tid AND `student_id` = :sid';
 $stmt = $db_con->prepare($sql);
 $stmt->bindParam(':tid', $_SESSION['teacher_id'], PDO::PARAM_INT);
 $stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
 $stmt->execute();
-
-
 $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 $sql = 'SELECT * FROM `students` WHERE `student_id` = :sid';
 $st = $db_con->prepare($sql);
 $st->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
 $st->execute();
-
 $s = $st->fetchAll(PDO::FETCH_ASSOC);
-var_dump($s);
-
-
-    function UserForm($customers = array())
-        { 
-        	global $name;
-            ob_start(); ?>
-            <div class="row">
-			 	<div class="col-lg-12">
-			 		<h1 class="text-primary"><?php echo $name; ?></h1>
-			 	</div><!--end .col -->
-			 	<div class="col-lg-8">
-			 		<article class="margin-bottom-xxl">
-			 			<p class="lead">
-			 				
-			 			</p>
-			 		</article>
-			 	</div><!--end .col -->
-			 </div><!--end .row -->
-			 <!-- END INTRO -->
-			 <!-- BEGIN BASIC ELEMENTS -->
-			 <div class="row">
-			 <div id="sections">
-			 <div class="section">
-			 	<div class="col-lg-offset-1 col-md-10 col-sm-6" >
-			 		<div class="card">
-			 			<div class="card-body">
-            <form action="" method="POST"><?php
-                $ID = $customers['id']; ?>
-                <tr>
-                    <td><input type="text" class="form-control" name="course_name" value="<?php echo $customers['course_name']; ?>"></td>
-                    <td><input type="text" class="form-control" name="grade" value="<?php echo $customers['grade']; ?>"</td>
-                    <td><input type="text" class="form-control" name="feedback" value="<?php echo $customers['feedback']; ?>"</td>
-                    <td align="center">
-                        <input type="hidden" name="id" value="<?php echo $ID; ?>">
-                        <input type="submit" name="delete" value="X">
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="8">
-                    <input type="hidden" name="id_update" value="<?php echo $ID; ?>" />
-                    <input type="submit" name="update" value="Edit Course" />
-                    <?php echo $ID; ?><--This is the ID for each row -->
-                    </td>
-                </tr>
-            </form>
-
-            </div>
- 			</div><!--end .card-body -->
-
- 		</div><!--end .card -->
-
- 	</div><!--end .col -->
- 	<div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
-
- </div><!--end .row -->
- </div>
- </div>
-            <?php
-            $data   =   ob_get_contents();
-            ob_end_clean();
-            return $data;
-        }
-
+print_r($s);
+$name = print_r($s);
 ?>
 
 		<!-- END HEADER-->
@@ -108,69 +41,60 @@ var_dump($s);
 						} else {
 							$i = 0;
 							foreach ($courses as $c) {
-								echo UserForm($c);
-								// echo '
-								// <!-- BEGIN INTRO -->
-								// <div class="row">
-								// 	<div class="col-lg-12">
-								// 		<h1 class="text-primary">'.$name.'</h1>
-								// 	</div><!--end .col -->
-								// 	<div class="col-lg-8">
-								// 		<article class="margin-bottom-xxl">
-								// 			<p class="lead">
-								// 				Enter students first and last name and click \'Submit\'
-								// 			</p>
-								// 		</article>
-								// 	</div><!--end .col -->
-								// </div><!--end .row -->
-								// <!-- END INTRO -->
-								// <!-- BEGIN BASIC ELEMENTS -->
-								// <div class="row">
-								// <div id="sections">
-								// <div class="section">
-								// 	<div class="col-lg-offset-1 col-md-10 col-sm-6" >
-								// 		<div class="card">
-								// 			<div class="card-body">
-								// 				<form class="form" id="edit" action="">
-								// 				<div class="form-group">
-								// 					<input type="hidden" name="teacher_id" class="form-control" id="teacher_id" value="'. $_SESSION['teacher_id'] .'">
-								// 					<input type="hidden" name="student_id" class="form-control" id="student_id" value="'. $_REQUEST['student_id'] .'">
-								// 					<input type="hidden" name="course_id" class="form-control" id="course_id" value="'.$c['id'].'">
+								echo '
 
-								// 				</div>
-								// 					<div class="form-group">
-								// 						<input type="text" name="course_name" class="form-control" id="course_name" value="'.$c['course_name'].'">
-								// 						<label for="cname">Course Name</label>
-								// 					</div>
-								// 					<div class="form-group">
-								// 						<input type="text" name="grade" class="form-control" id="grade" value="'.$c['grade'].'">
-								// 						<label for="cgrade">Course Grade</label>
-								// 					</div>
-								// 					<div class="form-group">
-								// 						<textarea name="feedback" rows="4" class="form-control" id="feedback" value="'.$c['feedback'].'">'.$c['feedback'].'</textarea>
-								// 						<label for="feedback">Feedback</label>
-								// 					</div>
-								// 					<div class="form-group">
-								// 						<button type="button" class="btn btn-success" name="edit'.$c['id'].'" id="editCourse'.$c['id'].'"">Edit Course</button>
-								// 				</form>
-
-								// 			</div>
-								// 			</div><!--end .card-body -->
-
-								// 		</div><!--end .card -->
-
-								// 	</div><!--end .col -->
-								// 	<div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
-
-								// </div><!--end .row -->
-								// </div>
-								// </div>
-								// <!-- END BASIC ELEMENTS -->
-
-
-
-								// ';
-
+								<!-- BEGIN INTRO -->
+								<div class="row">
+									<div class="col-lg-12">
+										<h1 class="text-primary">'.$name.'</h1>
+									</div><!--end .col -->
+									<div class="col-lg-8">
+										<article class="margin-bottom-xxl">
+											<p class="lead">
+												Enter students first and last name and click \'Submit\'
+											</p>
+										</article>
+									</div><!--end .col -->
+								</div><!--end .row -->
+								<!-- END INTRO -->
+								<!-- BEGIN BASIC ELEMENTS -->
+								<div class="row">
+								<div id="sections">
+								<div class="section">
+									<div class="col-lg-offset-1 col-md-10 col-sm-6" >
+										<div class="card">
+											<div class="card-body">
+												<form class="form" id="edit" action="">
+												<div class="form-group">
+													<input type="hidden" name="teacher_id" class="form-control" id="teacher_id" value="'. $_SESSION['teacher_id'] .'">
+													<input type="hidden" name="student_id" class="form-control" id="student_id" value="'. $_REQUEST['student_id'] .'">
+													<input type="hidden" name="course_id[]" class="form-control" id="course_id" value="'.$c['id'].'">
+												</div>
+													<div class="form-group">
+														<input type="text" name="cname[]'.$i.'" class="form-control" id="cname" value="'.$c['course_name'].'">
+														<label for="cname">Course Name</label>
+													</div>
+													<div class="form-group">
+														<input type="text" name="cgrade[]'.$i.'" class="form-control" id="cgrade" value="'.$c['grade'].'">
+														<label for="cgrade">Course Grade</label>
+													</div>
+													<div class="form-group">
+														<textarea name="feedback[]'.$i.'" rows="4" class="form-control" id="feedback" value="'.$c['feedback'].'">'.$c['feedback'].'</textarea>
+														<label for="feedback">Feedback</label>
+													</div>
+													<div class="form-group">
+														<button type="button" class="btn btn-success" name="edit'.$c['id'].'" id="editCourse'.$c['id'].'"">Edit Course</button>
+												</form>
+											</div>
+											</div><!--end .card-body -->
+										</div><!--end .card -->
+									</div><!--end .col -->
+									<div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
+								</div><!--end .row -->
+								</div>
+								</div>
+								<!-- END BASIC ELEMENTS -->
+								';
 								$i++;
 							}
 						}
@@ -266,5 +190,17 @@ var_dump($s);
 		</div><!--end #base-->
 
 		<!-- END BASE -->
-
 		<?php require 'inc/footer.php'; ?>
+
+		<script>
+$("#Save").on("click",function() {
+    $(".MCQuestion").each(function(){
+        if($(this).val()!=""){
+            $(this).closest(".formRow").find(".MCAnswer").each(function(){
+                $('#log').after($(this).val());
+            });
+        }
+    });
+    return false;
+});
+</script>
