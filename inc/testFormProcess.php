@@ -6,8 +6,8 @@ require 'db-config.php';
 $course_name = $_REQUEST['course_name'];
 $grade = $_REQUEST['grade'];
 $feedback = $_REQUEST['feedback'];
-$teacher_id = $_REQUEST['teacher_id'];
-$student_id = $_REQUEST['student_id'];
+// $teacher_id = $_REQUEST['teacher_id'];
+// $student_id = $_REQUEST['student_id'];
 
 
 
@@ -34,11 +34,11 @@ if (isset($_REQUEST['create']) && $_REQUEST['create'] === "true") {
           $statement = $db_con->prepare("INSERT INTO courses(course_name, grade, feedback, teacher_id, student_id)
               VALUES(:course_name, :grade, :feedback, :teacher_id, :student_id)");
           $statement->execute(array(
-              "course_name" => $course_name,
-              "grade" => $grade,
-              "feedback" => $feedback,
-              "teacher_id" => $teacher_id,
-              "student_id" => $student_id
+              "course_name" => $_REQUEST['course_name'],
+              "grade" => $_REQUEST['grade'],
+              "feedback" => $_REQUEST['feedback'],
+              "teacher_id" => $_REQUEST['teacher_id'],
+              "student_id" => $_REQUEST['student_id']
 
           ));
             echo 'Course added sucessfully!';

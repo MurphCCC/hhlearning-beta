@@ -14,107 +14,80 @@ $st->execute();
 $s = $st->fetchAll(PDO::FETCH_ASSOC);
 print_r($s);
 $name = print_r($s);
+	foreach ($s as $student) {
+		echo $student->first_name;
+	}
 ?>
 
-		<!-- END HEADER-->
+<div id="base">
+	<div class="offcanvas"></div>
+		<section>
+			<div class="section-header">
+				<ol class="breadcrumb">
+					<li><a href="#">Home</a></li>
+					<li class="active">All Students</li>
+				</ol>
+			</div><!--end .section-header -->
+			
+			<div class="section-body">
+				<!-- Controls for our form submission/creation -->
+					<div class="controls">
+					<button type="button" class="btn btn-info addsection">Add a blank course</button>
+					<button id="allsubmit" class="btn btn-success">Save</button>
+					Enter 
+							<?php 	
+								foreach ($s as $student) {
+									$first = $student['first_name'];
+									$last = $student['last_name'];
+								}; ?> 
+								<?php echo $first . ' ' . $last; ?> 's information below and click Save
+					<article class="margin-bottom-xxl">
+				</div>
+				
+						<!-- <p class="lead"> --></p>
+						
 
-		<!-- BEGIN BASE-->
-		<div id="base">
-			<!-- WE NEED THIS BLOCK IN ORDER FOR OUR OFFCANVAS ELEMENT LATER IN THE PAGE TO WORK -->
-			<div class="offcanvas"></div>
-				<!-- BEGIN BLANK SECTION -->
-				<section>
-					<div class="section-header">
-						<ol class="breadcrumb">
-							<li><a href="#">Home</a></li>
-							<li class="active">All Students</li>
-						</ol>
-					</div><!--end .section-header -->
-					<div class="section-body">
-						<button type="button" class="btn btn-info addsection">Add a blank course</button>
-						<!-- sheepIt Form -->
+				</article>
 
-						<?php  
-						//sizeof($courses) should return then number of courses a student has been assigned.  If this number is 0, then we want to display a form, and when the teacher submits it, it should create the first course for this student/teacher combo, else we should have an edit button for each entry.
-						if(sizeof($courses) === 0) {
-							addCourse();
-						} else {
-							$i = 0;
-							foreach ($courses as $c) {
-								echo '
-
-								<!-- BEGIN INTRO -->
+				
+				<?php  
+				//sizeof($courses) should return then number of courses a student has been assigned.  If this number is 0, then we want to display a form, and when the teacher submits it, it should create the first course for this student/teacher combo, else we should have an edit button for each entry.
+					if(sizeof($courses) === 0) {
+					    addCourse();
+					} else {
+						$i = 0;
+						foreach ($courses as $c) {
+							echo '
 								<div class="row">
-									<div class="col-lg-12">
-										<h1 class="text-primary">'.$name.'</h1>
-									</div><!--end .col -->
-									<div class="col-lg-8">
-										<article class="margin-bottom-xxl">
-											<p class="lead">
-												Enter students first and last name and click \'Submit\'
-											</p>
-										</article>
-									</div><!--end .col -->
-								</div><!--end .row -->
-								<!-- END INTRO -->
-								<!-- BEGIN BASIC ELEMENTS -->
-								<div class="row">
-								<div id="sections">
-								<div class="section">
-									<div class="col-lg-offset-1 col-md-10 col-sm-6" >
-										<div class="card">
-											<div class="card-body">
-												<form class="form" id="edit" action="">
-												<div class="form-group">
-													<input type="hidden" name="teacher_id" class="form-control" id="teacher_id" value="'. $_SESSION['teacher_id'] .'">
-													<input type="hidden" name="student_id" class="form-control" id="student_id" value="'. $_REQUEST['student_id'] .'">
-													<input type="hidden" name="course_id[]" class="form-control" id="course_id" value="'.$c['id'].'">
+									<div id="sections" class="section">
+										<div class="col-lg-offset-1 col-md-10 col-sm-6" >
+											<div class="card">
+												<div class="card-body">
+													<div class="form-group">
+														<form class="allforms" method="POST" action="">
+											    			Grade<input class="form-control" type="text" name="grade" value="'.$c["grade"].'"></input>
+											    			Course<input class="form-control" type="text" name="course_name" value="'.$c["course_name"].'"></input>
+											    			Feedback<textarea class="form-control" name="feedback">'.$c["feedback"].'</textarea>
+											        		<input type="hidden" name="id" value="'.$c["id"].'"></input>
+												    		<input type="hidden" name="update" value="true"></input>
+
+														</form>
+													</div>
 												</div>
-													<div class="form-group">
-														<input type="text" name="cname[]'.$i.'" class="form-control" id="cname" value="'.$c['course_name'].'">
-														<label for="cname">Course Name</label>
-													</div>
-													<div class="form-group">
-														<input type="text" name="cgrade[]'.$i.'" class="form-control" id="cgrade" value="'.$c['grade'].'">
-														<label for="cgrade">Course Grade</label>
-													</div>
-													<div class="form-group">
-														<textarea name="feedback[]'.$i.'" rows="4" class="form-control" id="feedback" value="'.$c['feedback'].'">'.$c['feedback'].'</textarea>
-														<label for="feedback">Feedback</label>
-													</div>
-													<div class="form-group">
-														<button type="button" class="btn btn-success" name="edit'.$c['id'].'" id="editCourse'.$c['id'].'"">Edit Course</button>
-												</form>
 											</div>
-											</div><!--end .card-body -->
-										</div><!--end .card -->
-									</div><!--end .col -->
-									<div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
+										</div>
+									</div>
+										<div class="col-lg-offset-1 col-md-6 col-sm-6" id="success"></div>
 								</div><!--end .row -->
-								</div>
-								</div>
-								<!-- END BASIC ELEMENTS -->
 								';
 								$i++;
 							}
 						}
-						?>
-
-  <!-- /Controls -->
-
-</div>
-<!-- /sheepIt Form -->
-					</div>
-				</div>
-				</section>
-
-
-
-				<!-- BEGIN BLANK SECTION -->
-			</div><!--end #content-->
-			<!-- END CONTENT -->
-
-			<!-- BEGIN MENUBAR-->
+				?>
+			</div>
+				<div class="newSection"></div>
+		</section>
+	</div>
 			<div id="menubar" class="menubar-inverse ">
 				<div class="menubar-fixed-panel">
 					<div>

@@ -58,38 +58,44 @@ var student_id = "<?php echo $c['id'];?>";
 var sectionsCount = 1;
 
 //add new section
-$('body').on('click', '.addsection', function() {
-    //increment
-    sectionsCount++;
+// $('body').on('click', '.addsection', function() {
+//   alert();
+    //   $.ajax({
+    //     type: "POST",
+    //     url: "inc/addCourse.php?addCourse=true"
+    // });
 
-    //loop through each input
-    var section = template.clone().find(':input').each(function(){
+    // //increment
+    // sectionsCount++;
 
-        //set id to store the updated section number
-        var newId = this.id + sectionsCount;
+    // //loop through each input
+    // var section = template.clone().find(':input').each(function(){
 
-        //update for label
-        // $(this).prev().attr("value", );
+    //     //set id to store the updated section number
+    //     var newId = this.id + sectionsCount;
 
-        //update name and id
+    //     //update for label
+    //     // $(this).prev().attr("value", );
 
-          this.name = newId;
-          this.id = newId;
-          var test = $("input[name=student_id2]:hidden");
-          test.val('work!');
-          // $("#student_id2").val(2);
+    //     //update name and id
+
+    //       this.name = newId;
+    //       this.id = newId;
+    //       var test = $("input[name=student_id2]:hidden");
+    //       test.val('work!');
+    //       // $("#student_id2").val(2);
 
 
 
-        //Clear out each input value so that our cloned form is blank
-        $(this).attr('value', '');
-    }).end()
+    //     //Clear out each input value so that our cloned form is blank
+    //     $(this).attr('value', '');
+    // }).end()
 
-    //inject new section
-    .appendTo('#sections');
-    return false;
-    document.getElementById("#edit").reset();
-});
+    // //inject new section
+    // .appendTo('#sections');
+    // return false;
+    // document.getElementById("#edit").reset();
+// });
 
 //remove section
 $('#sections').on('click', '.remove', function() {
@@ -101,31 +107,7 @@ $('#sections').on('click', '.remove', function() {
     });
     return false;
 });
-//AddCourse function
-$(document).ready(function() {
-    var teacher_id = <?php echo $_SESSION['teacher_id']; ?>;
-    var student_id = '<?php echo $_REQUEST['student_id']; ?>';
-    var max_fields      = 10; //maximum input boxes allowed
-    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
 
-    var x = 1; //initlal text box count
-    // $(add_button).click(function(e){ //on add input button click
-    //     e.preventDefault();
-    //     if(x < max_fields){ //max input box allowed
-    //         x++; //text box increment
-    //         $('.start-course').clone().insertAfter(".start-course");
-    //
-    //     }
-    //
-    // });
-    //
-    // $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-    //     e.preventDefault(); $(this).parent('div').remove(); x--;
-    // })
-
-
-});
 
 
 // Auto Capitalize our form data
@@ -230,93 +212,46 @@ $("#addStudentSubmit").on('click', function() {
 $('input').keyup(function() {
         this.value = this.value.charAt(0).toUpperCase()+this.value.slice(1);
     });
-// Submit our form for processing
 
-// $("#update").on('click', function() {
-//   str = $("form").serialize();
-//   alert(str);
-//   $.ajax({
-//       type: "POST",
-//       url: "inc/processForm.php?action=update&",
-//       data: str,
-//       success: function(data) {
-//         var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
-//         $("#success").html(card).fadeIn(5000);
-//         $("#success").delay(5000).fadeOut("slow");
-//         $("#addCourse")[0].reset();
-//       },
-//       error: function() {
-//           alert('Sorry something went wrong');
-//       }
-//   });
-//   console.log(str);
-// })
+</script>
 
 
-
-// $("#editCourse1").on('click', function() {
-//   str = $("#edit1").serialize();
-//   $.ajax({
-//       type: "POST",
-//       url: "inc/processForm.php?action=editCourse&",
-//       data: str,
-//       success: function(data) {
-//         var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
-//         $("#success").html(card).fadeIn(5000);
-//         $("#success").delay(5000).fadeOut("slow");
-//         $("#addCourse")[0].reset();
-//       },
-//       error: function() {
-//           alert('Sorry something went wrong');
-//       }
-//   });
-//   console.log(str);
-// })
-$("#addCourse").on('click', function() {
-  var datastring = $("#courseForm").serialize();
-  function addCourse() {
-    return $.ajax({
-        type: "POST",
-        url: "inc/processForm.php?action=addCourse&",
-        data: datastring,
-        success: function(data) {
-          var card = '<div class="card" id="successCard"><div class="card-body" id="success"><h1><center>'+data+'</center></h1></div></div>';
-          $("#success").html(card).fadeIn(5000);
-          $("#success").delay(5000).fadeOut("slow");
-          $("#courseForm")[0].reset();
-        },
-        error: function() {
-            alert('Sorry something went wrong');
-        }
+<script>
+    $(function() {
+    $("#allsubmit").click(function(){
+        $('.allforms').each(function(){
+            valuesToSend = $(this).serialize();
+            alert($(this).serialize());
+            $.ajax($(this).attr('action'),
+                {
+                method: $(this).attr('method'),
+                data: valuesToSend,
+                type: "POST",
+                url: "inc/testFormProcess.php"
+                }
+            )
+        });
     });
-  }
+});
+
+    $(function() {
+      var html = '<div class="row"><div id="sections"><div class="section"><div class="col-lg-offset-1 col-md-10 col-sm-6" ><div class="card"><div class="card-body">';
+      html += '<form class="allforms" method="POST" action="">';
+          html += 'Course<input type="text" name="course_name" value="Science"></input>';
+      html += 'Grade<input type="text" name="grade" value="90"></input>';
+       html += 'Feedback<textarea name="feedback">jhakdfhka fhjka kflj dakjf as</textarea>';
+       html += '<input type="hidden" name="student_id" value="34"></input>';
+        html += '<input type="hidden" name="teacher_id" value="1">';
+
+        html += '<input type="hidden" name="create" value="true"></input>';
 
 
-  function updateStudents() {
-    $.ajax({
-        type: "POST",
-        url: "inc/listStudents.php",
-        data: datastring,
-        success: function(data) {
-          return $.when();
-        },
-        error: function() {
-            alert('Sorry something went wrong');
-        }
+  html += '</form></div></div></div></div></div></div></div>';
+      $(".addsection").click(function() {
+        $(".newSection").append(html);
+      });
     });
-  }
 
-  addCourse().then(updateStudents);
-
-})
-
-
-    // $(document).on('click', ".deleteLink", function(){
-
-    //  var decDate = $(this).find('input').val();
-
-    //  alert(decDate);
-    // });
 </script>
 </body>
 </html>

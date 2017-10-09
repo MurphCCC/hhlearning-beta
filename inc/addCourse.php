@@ -25,28 +25,18 @@ $i = $_POST['i'];
     <div class="col-lg-offset-1 col-md-10 col-sm-6">
       <div class="card">
         <div class="card-body">
-          <form class="form" action="" id="courseForm'.$i.'">
-          <div class="form-group">
-            <input type="hidden" name="teacher_id" class="form-control" id="teacher_id" value="'. $_SESSION['teacher_id'] .'">
-            <input type="hidden" name="student_id" class="form-control" id="student_id" value="'. $_REQUEST['student_id'] .'">
+          <form class="allforms" method="POST" action="">
+    Grade<input class="form-control" type="text" name="grade" value=""></input>
+    Course<input class="form-control" type="text" name="course_name" value=""></input>
+    Feedback<textarea class="form-control" name="feedback"></textarea>
+    <input type="hidden" name="student_id" value="'.$c["student_id"].'"></input>
+    <input type="hidden" name="teacher_id" value="'.$c["teacher_id"].'">
+    <input type="hidden" name="course_id" value=""></input>
+    <input type="hidden" name="create" value="true"></input>
 
-          </div>
-            <div class="form-group">
-              <input type="text" name="cname" class="form-control" id="cname" value="">
-              <label for="cname">Course Name</label>
-            </div>
-            <div class="form-group">
-              <input type="text" name="cgrade" class="form-control" id="cgrade" value="">
-              <label for="cgrade">Course Grade</label>
-            </div>
-            <div class="form-group">
-              <textarea name="feedback" rows="4" class="form-control" id="feedback" value=""></textarea>
-              <label for="feedback">Feedback</label>
-            </div>
-            <div class="form-group">
-              <button type="button" class="btn btn-success" id="addCourse">Submit</button>
-          </form>
-        </div>
+
+  <input type="submit" />
+</form>
         </div><!--end .card-body -->
       </div><!--end .card -->
     </div><!--end .col -->
