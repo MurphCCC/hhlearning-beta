@@ -17,6 +17,10 @@ file_put_contents('../assets/students.json', json_encode($student_list));
 echo 'Student list generated succesfully';
 
 
+
+
+
+
 if (isset($_POST)) {
 
   require 'db-config.php';
@@ -36,5 +40,7 @@ if (isset($_POST)) {
   echo 'Student list generated succesfully';
 
 }
+
+
 
 ?>

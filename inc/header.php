@@ -1,15 +1,19 @@
 <?php
-require 'db-config.php';
 
+
+require 'db-config.php';
 //If we don't have a variable set, then make user a teacher by default.
 include('functions.php');
-$_SESSION['teacher_id'] = 1;
 // Get our teacher's information from the database, we will use this for all the students courses.
 $sql = 'SELECT `first_name`, `last_name` FROM `teachers` WHERE `teacher_id` = :id';
 $stmt = $db_con->prepare($sql);
 $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
 $stmt->execute();
 $t =  $stmt->fetchObject();
+
+if (!isset($_SESSION['username'])) {
+    header("location:login/main_login.php");
+}
 
 echo '
 <!DOCTYPE html>
@@ -78,11 +82,7 @@ echo '
 							<ul class="dropdown-menu animation-dock">
 								<li class="dropdown-header">Config</li>
 								<li><a href="#" id="admin-toggle">Toggle Admin Mode</a></li>
-								<li><a href="html/pages/blog/post.html">My blog <span class="badge style-danger pull-right">16</span></a></li>
-								<li><a href="html/pages/calendar.html">My appointments</a></li>
-								<li class="divider"></li>
-								<li><a href="html/pages/locked.html"><i class="fa fa-fw fa-lock"></i> Lock</a></li>
-								<li><a href="html/pages/login.html"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
+								<li><a href="login/logout.php"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
 							</ul><!--end .dropdown-menu -->
 						</li><!--end .dropdown -->
 					</ul><!--end .header-nav-profile -->

@@ -8,7 +8,7 @@ if($mode === 'teacher') {
 
     <!-- BEGIN DASHBOARD -->
     <li>
-      <a href="/index.php" >
+      <a href="index.php" >
         <div class="gui-icon"><i class="md md-home"></i></div>
         <span class="title">Dashboard</span>
       </a>

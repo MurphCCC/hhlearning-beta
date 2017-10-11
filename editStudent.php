@@ -1,22 +1,40 @@
 <?php
+
+
 require 'inc/header.php';
 require 'inc/db-config.php';
-$sql = 'SELECT * FROM `courses` WHERE `teacher_id` = :tid AND `student_id` = :sid';
-$stmt = $db_con->prepare($sql);
-$stmt->bindParam(':tid', $_SESSION['teacher_id'], PDO::PARAM_INT);
-$stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
-$stmt->execute();
-$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+/*  In administrator mode a teacher has access to edit all courses for a given student regardless of whether they are the assigned teacher or not.  In teacher mode a teacher will only have access to the courses they are assigned to.  This allows for an admin user to go back and make changes for other teachers.
+* One feature that is lacking would be a way to change the teacher assigned to a course*/
+if ($_SESSION['admin_mode'] === 'teacher') {
+	$sql = 'SELECT * FROM `courses` WHERE `teacher_id` = :tid AND `student_id` = :sid';
+	$stmt = $db_con->prepare($sql);
+	$stmt->bindParam(':tid', $_SESSION['teacher_id'], PDO::PARAM_INT);
+	$stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
+	$stmt->execute();
+	$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else if ($_SESSION['admin_mode'] === 'admin') {
+	$sql = 'SELECT * FROM `courses` WHERE `student_id` = :sid';
+	$stmt = $db_con->prepare($sql);
+	$stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
+	$stmt->execute();
+	$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+}
+
 $sql = 'SELECT * FROM `students` WHERE `student_id` = :sid';
 $st = $db_con->prepare($sql);
 $st->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
 $st->execute();
 $s = $st->fetchAll(PDO::FETCH_ASSOC);
-print_r($s);
-$name = print_r($s);
-	foreach ($s as $student) {
-		echo $student->first_name;
-	}
+$sid = $_REQUEST['student_id'];
+
+/* Return a list of all our teachers.  This would best be done as a json file*/
+$sql = 'SELECT * FROM `teachers`';
+$st = $db_con->prepare($sql);
+$st->execute();
+$teachers = $st->fetchAll(PDO::FETCH_ASSOC);
+
+var_dump($teachers);
 ?>
 
 <div id="base">
@@ -32,15 +50,22 @@ $name = print_r($s);
 			<div class="section-body">
 				<!-- Controls for our form submission/creation -->
 					<div class="controls">
-					<button type="button" class="btn btn-info addsection">Add a blank course</button>
+					<button type="button" class="btn btn-info addsection">Add a new course</button>
 					<button id="allsubmit" class="btn btn-success">Save</button>
-					Enter 
-							<?php 	
-								foreach ($s as $student) {
-									$first = $student['first_name'];
-									$last = $student['last_name'];
-								}; ?> 
-								<?php echo $first . ' ' . $last; ?> 's information below and click Save
+
+							<?php
+							if (sizeof($courses) != 0) {
+							 		foreach ($s as $student) {
+
+										$first = $student['first_name'];
+										$last = $student['last_name'];
+										echo "Enter " . $first . ' ' . $last . " information below and click Save";
+									};
+							 	} 	else {
+							 		echo 'Please add a course below';
+							 	}
+ 							?> 
+								
 					<article class="margin-bottom-xxl">
 				</div>
 				
@@ -96,7 +121,7 @@ $name = print_r($s);
 						</a>
 					</div>
 					<div class="expanded">
-						<a href="html/dashboards/dashboard.html">
+						<a href="#">
 							<span class="text-lg text-bold text-primary ">MATERIAL&nbsp;ADMIN</span>
 						</a>
 					</div>
@@ -164,16 +189,3 @@ $name = print_r($s);
 
 		<!-- END BASE -->
 		<?php require 'inc/footer.php'; ?>
-
-		<script>
-$("#Save").on("click",function() {
-    $(".MCQuestion").each(function(){
-        if($(this).val()!=""){
-            $(this).closest(".formRow").find(".MCAnswer").each(function(){
-                $('#log').after($(this).val());
-            });
-        }
-    });
-    return false;
-});
-</script>

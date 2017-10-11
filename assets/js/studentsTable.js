@@ -39,16 +39,23 @@
 		var table = $('#teacherTable').DataTable({
 			"dom": 'T<"clear">lfrtip',
 			"ajax": 'assets/students.json',
-			"columns": [
-				{"data": "first_name"},
-				{"data": "last_name"},
-				{
-					"class": 'edit-student',
-					"orderable": false,
-					"data": null,
-					"defaultContent": '<button type="button" class="btn ink-reaction btn-raised btn-lg btn-primary" id="edit">Edit Student</button>'
-				},
-			],
+			"aoColumns": [
+					{
+						"mData":"first_name",
+						"sTitle": "First Name"
+					},{
+						"mData": "last_name", //mData must correspond to a key/value in our students.json file.
+						"sTitle": "Last Name" //sTitle is the name we wish to give to our column in the table
+					},{
+						"mData": "student_id",
+						"className": "editStudent",
+						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
+							var student_id = url;
+							// return '<a id="deleteStudent" href="inc/processForm.php?action=deleteStudent&student_id='+url+'">Delete Student</a>';
+							return '<button class="btn btn-success editLink" data-hidden="'+url+'" id="edit" value="'+url+'">Edit</button>  <button class="btn btn-info printLink" data-hidden="'+url+'" id="print" value="'+url+'">Print Report</button>';
+					}
+					},
+				],
 			"tableTools": {
 				"sSwfPath": $('#teacherTable').data('swftools')
 			},
@@ -66,24 +73,33 @@
 		//Add event listener for opening and closing details
 		var o = this;
 
-		$('#teacherTable tbody').on('click', 'td.edit-student', function() {
-			var tr = $(this).closest('tr');
-			var row = table.row(tr);
+						//Listen confirm deletion of student then send post to form processing
+				$('#teacherTable tbody').on('click', '.editLink', function() {
 
-			if (row.child.isShown()) {
-				// This row is already open - close it
-				row.child.hide();
-				tr.removeClass('shown');
-			}
-			else {
-				// Open this row
-				row.child(o._formatDetails(row.data())).show();
-				tr.addClass('shown');
-			}
-		});
+					var id = $(this).data('hidden');
+					
+					if (confirm("Are you sure you want to Edit this student?") == true) {
+						window.location.assign('editStudent.php?student_id=' + id);
+					     //    $.ajax({
+						    //     type: "POST",
+						    //     url: "inc/processForm.php?action=deleteStudent&student_id=" + student_id,
+						    //     success: function(data) {
 
-			$('#adminTable tbody').on('click', 'td.deleteStudent', function() {
-				alert('You clicked delete');
+						 		 //    var sucMesg = function(data) {
+						 		 //    	alert(data);
+						 		 //    	location.reload();
+						 		 //    }
+						    //       return sucMesg(data);
+
+						    //     },
+						    //     error: function(data) {
+						    //         alert('Sorry something went wrong');
+						    //     }
+						    // });
+					} else {
+					    txt = "No changes have been made";
+					}
+				
 		});
 	};
 
@@ -128,10 +144,6 @@
 		//Add event listener for opening and closing details
 		var o = this;
 
-		function test(url) {
-			alert('hello',url);
-		}
-
 				//Listen confirm deletion of student then send post to form processing
 				$('#adminTable tbody').on('click', '.deleteLink', function() {
 
@@ -160,36 +172,7 @@
 				
 		});
 
-
-
-
 	};
-	// =========================================================================
-	// DETAILS
-	// =========================================================================
-
-	p._formatDetails = function(d) {
-		// `d` is the original data object for the row
-    window.location.assign('editStudent.php?student_id='+d.student_id);
-		// return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-		// 		'<tr>' +
-		// 		'<td>Full name:</td>' +
-		// 		'<td>' + d.student_id + '</td>' +
-		// 		'</tr>' +
-		// 		'<tr>' +
-		// 		'<td>Extension number:</td>' +
-		// 		'<td>' + d.extn + '</td>' +
-		// 		'</tr>' +
-		// 		'<tr>' +
-		// 		'<td>Extra info:</td>' +
-		// 		'<td>And any further details here (images etc)...</td>' +
-		// 		'</tr>' +
-		// 		'</table>';
-	};
-
-
-
-	// =========================================================================
 	namespace.DemoTableDynamic = new DemoTableDynamic;
 }(this.materialadmin, jQuery)); // pass in (namespace, jQuery):
 

@@ -221,7 +221,6 @@ $('input').keyup(function() {
     $("#allsubmit").click(function(){
         $('.allforms').each(function(){
             valuesToSend = $(this).serialize();
-            alert($(this).serialize());
             $.ajax($(this).attr('action'),
                 {
                 method: $(this).attr('method'),
@@ -231,27 +230,63 @@ $('input').keyup(function() {
                 }
             )
         });
+        window.location.reload();
     });
 });
 
     $(function() {
-      var html = '<div class="row"><div id="sections"><div class="section"><div class="col-lg-offset-1 col-md-10 col-sm-6" ><div class="card"><div class="card-body">';
-      html += '<form class="allforms" method="POST" action="">';
-          html += 'Course<input type="text" name="course_name" value="Science"></input>';
-      html += 'Grade<input type="text" name="grade" value="90"></input>';
-       html += 'Feedback<textarea name="feedback">jhakdfhka fhjka kflj dakjf as</textarea>';
-       html += '<input type="hidden" name="student_id" value="34"></input>';
-        html += '<input type="hidden" name="teacher_id" value="1">';
+      var student_id = "<?php echo $sid; ?>";
+      var teacher_id = "<?php echo $_SESSION['teacher_id']?>";  
+      var mode = "<?php echo $_SESSION['admin_mode']; ?>";
+      var i = 0;
 
-        html += '<input type="hidden" name="create" value="true"></input>';
+      var form = '<div class="row"><div id="sections"><div class="section"><div class="col-lg-offset-1 col-md-10 col-sm-6" ><div class="card"><div class="card-body">';
+      form += '<form class="allforms" method="POST" action="">';
+      form += 'Grade<input class="form-control" type="text" name="grade" value="90"></input>';
+      form += 'Course<input class="form-control" type="text" name="course_name" value="Science"></input>';
+      form += 'Feedback<textarea class="form-control" name="feedback">jhakdfhka fhjka kflj dakjf as</textarea>';
+      form += '<input class="form-control" type="hidden" name="student_id" value="'+student_id+'"></input>';
+      //If we are in teacher mode, append hidden input with teacher's id
+      if (mode === 'teacher') {
+        form += '<input type="hidden" name="teacher_id" value="'+teacher_id+'">';
+      } else { //If we are in admin mode, append select box to be populated with data from teachers.json file
+        form += ' <select id="locality-dropdown" name="teacher_id"></select>';
+      }
+      // form += '<input type="hidden" name="teacher_id" value="1">'
+      
+      form += '<input type="hidden" name="create" value="true"></input>';
+      form += '</form></div></div></div></div></div></div></div>';
 
-
-  html += '</form></div></div></div></div></div></div></div>';
       $(".addsection").click(function() {
-        $(".newSection").append(html);
+        $(".newSection").append(form);
+        //When a new section is added by an administrator, populate a select box with list of teachers
+        
+        let dropdown = $('#locality-dropdown');
+
+        dropdown.empty();
+
+        dropdown.append('<option selected="true" disabled>Choose Teacher</option>');
+        dropdown.prop('selectedIndex', 0);
+
+        const url = 'assets/teachers.json';
+
+
+        // Populate dropdown with list of provinces
+        $.getJSON(url, function (data) {
+          $.each(data, function (key, entry) {
+            alert(entry.teacher_id);
+            dropdown.append($('<option></option>').attr('value', entry.teacher_id).text(entry.first_name + ' ' + entry.last_name));
+          })
+        });
+        
+
       });
     });
 
+
+
+
 </script>
+
 </body>
 </html>
