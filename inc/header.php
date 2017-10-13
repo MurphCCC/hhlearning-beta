@@ -14,6 +14,13 @@ $t =  $stmt->fetchObject();
 if (!isset($_SESSION['username'])) {
     header("location:login/main_login.php");
 }
+if ($_SESSION['admin_mode'] === 'teacher') {
+	echo '<style>h3.teacher {
+    display: none;
+}</style>';
+	
+};
+
 
 echo '
 <!DOCTYPE html>

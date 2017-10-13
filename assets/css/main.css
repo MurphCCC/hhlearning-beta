@@ -41,3 +41,6 @@ body {
 .form-signin .btn, .form-signup .btn  {
   margin-bottom: 10px;
 }
+h3.teacher {
+    float: right;
+}

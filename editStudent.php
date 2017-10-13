@@ -6,14 +6,16 @@ require 'inc/db-config.php';
 /*  In administrator mode a teacher has access to edit all courses for a given student regardless of whether they are the assigned teacher or not.  In teacher mode a teacher will only have access to the courses they are assigned to.  This allows for an admin user to go back and make changes for other teachers.
 * One feature that is lacking would be a way to change the teacher assigned to a course*/
 if ($_SESSION['admin_mode'] === 'teacher') {
-	$sql = 'SELECT * FROM `courses` WHERE `teacher_id` = :tid AND `student_id` = :sid';
+	$sql = 'SELECT id AS cId, course_name AS cName, grade AS cGrade, feedback as cFeedback, teacher_id, student_id FROM `courses` WHERE `teacher_id` = :tid AND `student_id` = :sid';
+
 	$stmt = $db_con->prepare($sql);
 	$stmt->bindParam(':tid', $_SESSION['teacher_id'], PDO::PARAM_INT);
 	$stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
 	$stmt->execute();
 	$courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else if ($_SESSION['admin_mode'] === 'admin') {
-	$sql = 'SELECT * FROM `courses` WHERE `student_id` = :sid';
+	// $sql = 'SELECT * FROM `courses` WHERE `student_id` = :sid';
+		$sql = 'SELECT teachers.first_name AS tFirst, teachers.last_name AS tLast, courses.course_name AS cName, courses.id AS cId, courses.grade AS cGrade, courses.feedback AS cFeedback FROM courses INNER JOIN teachers on courses.teacher_id = teachers.teacher_id WHERE courses.student_id = 2';
 	$stmt = $db_con->prepare($sql);
 	$stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
 	$stmt->execute();
@@ -77,11 +79,20 @@ var_dump($teachers);
 				
 				<?php  
 				//sizeof($courses) should return then number of courses a student has been assigned.  If this number is 0, then we want to display a form, and when the teacher submits it, it should create the first course for this student/teacher combo, else we should have an edit button for each entry.
+
+
+				
 					if(sizeof($courses) === 0) {
 					    addCourse();
 					} else {
 						$i = 0;
 						foreach ($courses as $c) {
+					if ($_SESSION['admin_mode'] === 'teacher') {
+						$teacherName = '';
+					} elseif ($_SESSION['admin_mode'] === 'admin') {
+						$teacherName = $c['tFirst'] . ' ' . $c['tLast'];
+						
+					}
 							echo '
 								<div class="row">
 									<div id="sections" class="section">
@@ -90,11 +101,12 @@ var_dump($teachers);
 												<div class="card-body">
 													<div class="form-group">
 														<form class="allforms" method="POST" action="">
-											    			Grade<input class="form-control" type="text" name="grade" value="'.$c["grade"].'"></input>
-											    			Course<input class="form-control" type="text" name="course_name" value="'.$c["course_name"].'"></input>
-											    			Feedback<textarea class="form-control" name="feedback">'.$c["feedback"].'</textarea>
-											        		<input type="hidden" name="id" value="'.$c["id"].'"></input>
+											    			Grade<input class="form-control" type="text" name="grade" value="'.$c["cGrade"].'"></input>
+											    			Course<input class="form-control" type="text" name="course_name" value="'.$c["cName"].'"></input>
+											    			Feedback<textarea class="form-control" name="feedback">'.$c["cFeedback"].'</textarea>
+											        		<input type="hidden" name="id" value="'.$c["cId"].'"></input>
 												    		<input type="hidden" name="update" value="true"></input>
+													<h3 class="teacher">Teacher - '.$teacherName.'</h3>
 
 														</form>
 													</div>
