@@ -11,7 +11,7 @@ class DbConn
         $this->password = $password; // Mysql password
         $this->db_name = $db_name; // Database name
         $this->tbl_prefix = $tbl_prefix; // Prefix for all database tables
-        $this->tbl_members = $tbl_members;
+        $this->tbl_members = 'teachers';
         $this->tbl_attempts = $tbl_attempts;
 
         try {

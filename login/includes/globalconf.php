@@ -13,7 +13,6 @@ class GlobalConf
         $this->signin_url = $signin_url;
         $this->max_attempts = $max_attempts;
     }
-
     public function addAttempt()
     {
         $attempts++;
