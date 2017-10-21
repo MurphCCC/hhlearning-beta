@@ -36,7 +36,6 @@ $st = $db_con->prepare($sql);
 $st->execute();
 $teachers = $st->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($teachers);
 ?>
 
 <div id="base">

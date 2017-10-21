@@ -52,7 +52,8 @@
 						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
 							var student_id = url;
 							// return '<a id="deleteStudent" href="inc/processForm.php?action=deleteStudent&student_id='+url+'">Delete Student</a>';
-							return '<button class="btn btn-success editLink" data-hidden="'+url+'" id="edit" value="'+url+'">Edit</button>  <button class="btn btn-info printLink" data-hidden="'+url+'" id="print" value="'+url+'">Print Report</button>';
+							return '<button class="btn btn-success editLink" data-hidden="'+url+'" id="edit" value="'+url+'">Edit</button>' +
+							'<a href="printAllStudents.php?print='+url+'" class="btn btn-info printLink" data-hidden="'+url+'" id="print" value="'+url+'">Print Report</a>';
 					}
 					},
 				],
@@ -73,7 +74,17 @@
 		//Add event listener for opening and closing details
 		var o = this;
 
-						//Listen confirm deletion of student then send post to form processing
+				$('teacherTable tbody').on('click', '.printLink', function() {
+					var id = $(this).data('hidden');
+					if (confirm("Are you sure you want to print a report for this student?") == true) {
+						window.location.assign('printAllStudents.php?print=' + id);
+
+					} else {
+						txt = "Nevermind";
+					}
+				})
+
+				//Listen confirm deletion of student then send post to form processing
 				$('#teacherTable tbody').on('click', '.editLink', function() {
 
 					var id = $(this).data('hidden');
@@ -123,7 +134,9 @@
 						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
 							var student_id = url;
 							// return '<a id="deleteStudent" href="inc/processForm.php?action=deleteStudent&student_id='+url+'">Delete Student</a>';
-							return '<a data-hidden="'+url+'" class="deleteLink" id="delete" value="'+url+'">Delete</a>';
+							return '<button data-hidden="'+url+'" class="btn btn-danger deleteLink" id="delete" value="'+url+'">Delete Student</button>' +
+							'<a class="btn btn-info" href="printAllStudents.php?print='+url+'">Print Report</a>' +
+							'<a class="btn btn-success" href="editStudent.php?student_id='+url+'">Edit All Courses</a>' ;
 						}
 					},
 				],
