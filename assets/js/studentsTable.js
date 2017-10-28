@@ -29,7 +29,7 @@
 			return;
 		}
 
-		// Init the demo DataTables
+		// Init the DataTables
 		this._teacherTable();
 		this._adminTable();
 	};
@@ -52,7 +52,7 @@
 						"mRender": function ( url, type, full )  {  // In this case url is simple a placeholder for the student id that is being pulled from the JSON file.
 							var student_id = url;
 							// return '<a id="deleteStudent" href="inc/processForm.php?action=deleteStudent&student_id='+url+'">Delete Student</a>';
-							return '<button class="btn btn-success editLink" data-hidden="'+url+'" id="edit" value="'+url+'">Edit</button>' +
+							return '<button class="btn btn-success editLink" data-hidden="'+url+'" id="edit" value="'+url+'">Edit</button>  ' +
 							'<a href="printAllStudents.php?print='+url+'" class="btn btn-info printLink" data-hidden="'+url+'" id="print" value="'+url+'">Print Report</a>';
 					}
 					},
@@ -135,8 +135,8 @@
 							var student_id = url;
 							// return '<a id="deleteStudent" href="inc/processForm.php?action=deleteStudent&student_id='+url+'">Delete Student</a>';
 							return '<button data-hidden="'+url+'" class="btn btn-danger deleteLink" id="delete" value="'+url+'">Delete Student</button>' +
-							'<a class="btn btn-info" href="printAllStudents.php?print='+url+'">Print Report</a>' +
-							'<a class="btn btn-success" href="editStudent.php?student_id='+url+'">Edit All Courses</a>' ;
+							'      <a class="btn btn-info" href="printAllStudents.php?print='+url+'">Print Report</a>' +
+							'      <a class="btn btn-success" href="editStudent.php?student_id='+url+'">Edit All Courses</a>' ;
 						}
 					},
 				],

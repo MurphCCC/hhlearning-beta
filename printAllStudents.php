@@ -5,6 +5,10 @@
 require_once('./fpdf.php');
 require('inc/db-config.php');
 
+
+/* This script is designed to print report cards for teachers/administrators.  If a student id is passed to the 'print' parameter, then only a report
+*  for that student will be printed.  Else, we pass in the 'all' parameter and all reports are printed.*/
+
 class PDF extends FPDF
 {
 

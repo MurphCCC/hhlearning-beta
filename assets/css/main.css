@@ -44,3 +44,7 @@ body {
 h3.teacher {
     float: right;
 }
+.controls {
+    left: 8.6%;
+    position: relative;
+}
