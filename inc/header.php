@@ -5,12 +5,20 @@ require 'db-config.php';
 //If we don't have a variable set, then make user a teacher by default.
 include('functions.php');
 // Get our teacher's information from the database, we will use this for all the students courses.
-$sql = 'SELECT `first_name`, `last_name` FROM `teachers` WHERE `teacher_id` = :id';
+$sql = 'SELECT `username`, `first_name`, `last_name` FROM `teachers` WHERE `teacher_id` = :id';
+$sql2 = 'SELECT `student_id` FROM `courses` WHERE `teacher_id` = :id';
+
 $stmt = $db_con->prepare($sql);
 $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
 $stmt->execute();
 $t =  $stmt->fetchObject();
 
+$stmt = $db_con->prepare($sql2);
+$stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
+$stmt->execute();
+$s =  $stmt->fetch(PDO::FETCH_ASSOC);
+
+var_dump($s);
 if (!isset($_SESSION['username'])) {
     header("location:login/main_login.php");
 }
@@ -26,7 +34,7 @@ echo '
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Material Admin - Blank page</title>
+		<title>Hilger Grading Admin</title>
 
 		<!-- BEGIN META -->
 		<meta charset="utf-8">
@@ -63,7 +71,7 @@ echo '
 						<li class="header-nav-brand" >
 							<div class="brand-holder">
 								<a href="#">
-									<span class="text-lg text-bold text-primary">HHLearning Teacher\'s Admin</span>
+									<span class="text-lg text-bold text-primary">Hilger Grading Admin</span>
 								</a>
 							</div>
 						</li>
@@ -79,9 +87,9 @@ echo '
 					<ul class="header-nav header-nav-profile">
 						<li class="dropdown">
 							<a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
-								<img src="assets/img/avatar1.jpg?1403934956" alt="" />
+								<img src="https://hhlearning.com/wp-content/uploads/2017/04/cropped-HH-Logo.png" alt="" />
 								<span class="profile-info">
-									'.$t->first_name.' '.$t->last_name.'
+									'.$t->username.'
 									<small>'.admin_mode().'</small>
 								</span>
 							</a>
