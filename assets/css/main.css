@@ -48,3 +48,9 @@ h3.teacher {
     left: 8.6%;
     position: relative;
 }
+
+/*Disable our sidebar navigation on the far right of the page.  Possibly incorporate in a later version*/
+
+ul.header-nav.header-nav-toggle {
+    display: none;
+}
