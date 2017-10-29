@@ -33,4 +33,11 @@ $(document).ready(function () {
         }
         return false;
     });
+    $("#register").click(function(){
+        window.location.assign('signup.php');
+    });
+
+            $("#normalButton").click(function(){
+        alert("Normal Button clicked");
+    });
 });

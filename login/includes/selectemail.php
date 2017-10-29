@@ -7,7 +7,7 @@ class SelectEmail extends DbConn
             $db = new DbConn;
             $tbl_members = $db->tbl_members;
 
-            $stmt = $db->conn->prepare("SELECT email, username FROM ".$tbl_members." WHERE id = :myid");
+            $stmt = $db->conn->prepare("SELECT email, username FROM ".$tbl_members." WHERE hash = :myid");
             $stmt->bindParam(':myid', $id);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);

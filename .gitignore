@@ -1,3 +1,4 @@
 /inc/db-config.php
 /login/dbconf.php
 /login/globalcon.php
+/login/config.php
