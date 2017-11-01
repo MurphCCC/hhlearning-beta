@@ -34,7 +34,7 @@ class MailSender
         //Sets message body content based on type (verification or confirmation)
         if ($type == 'ResetPass' ) {
             $mail->Subject = $user . ' Password reset request';
-            $mail->Body = 'You have recently requested to reset your password.  Please click the link below to reset. <br><a href="'.$resetPass.'">'.$resetPass.'</a>';
+            $mail->Body = 'You have recently requested to reset your password.  Please click the link below to reset. <br><a href="'.$resetPass.'">Reset your password</a>';
 
         }
         else if ($type == 'Verify') {
