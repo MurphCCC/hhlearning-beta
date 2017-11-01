@@ -6,7 +6,6 @@ Class ResetUser extends DbConn
 
         public function resetPass($uid, $pass) 
     {
-        $pass = password_hash($pass, PASSWORD_DEFAULT);
         try {
             $vdb = new DbConn;
             $tbl_members = $vdb->tbl_members;
