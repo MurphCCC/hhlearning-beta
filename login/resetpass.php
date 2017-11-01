@@ -33,11 +33,7 @@ if (isset($_REQUEST['resetRequest'])) {
 } else if (isset($_REQUEST['password'])) {
 //Pull username, generate new ID and hash password
         $teacher_id = $_REQUEST['uid'];
-        $password = $_REQUEST['password'];
-        file_put_contents('test.pass', $password);
-        $newpw = password_hash($_REQUEST['password'], PASSWORD_DEFAULT);
-        $password = $_REQUEST['password'];
-        file_put_contents('test.pass', $newpw);
+	$newpw = password_hash($_REQUEST['password'], PASSWORD_DEFAULT);
         $a = new ResetUser;
         $response = $a->resetPass($teacher_id, $newpw);
         // Success
@@ -210,7 +206,7 @@ h3-status {
         <div class="form" id="form">
             <img src="https://hhlearning.com/wp-content/uploads/2017/04/cropped-HH-Logo.png" width="100px" height="100px"></img><h2>Hilger Grades</h2>
             <form class="form" method="POST" action="">
-            <input type="password" id="password" id="password" placeholder="Enter your new Password"/>
+            <input type="password" name="password" id="password" placeholder="Enter your new Password"/>
             <input type="hidden" name="uid" value="<?php echo $_REQUEST['uid']; ?>"/> 
             <button type="submit" name="submit" value="submit">Reset</button>
 
