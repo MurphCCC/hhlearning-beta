@@ -13,6 +13,9 @@ class MailSender
         // Can pass 1 (verified) or 0 (unverified/blocked) into url for "v" parameter
         $verifyurl = substr($base_url . $_SERVER['PHP_SELF'], 0, -strlen(basename($_SERVER['PHP_SELF']))) . "verifyuser.php?v=1&uid=" . $id;
 
+        //Email with link to reset password
+        $resetPass = substr($base_url . $_SERVER['PHP_SELF'], 0, -strlen(basename($_SERVER['PHP_SELF']))) . "resetpass.php?r=1&uid=" . $id;
+
         // Create a new PHPMailer object
         // ADD sendmail_path = "env -i /usr/sbin/sendmail -t -i" to php.ini on UNIX servers
         $mail = new PHPMailer;
@@ -29,7 +32,12 @@ class MailSender
         $mail->addAddress($email, $user);
 
         //Sets message body content based on type (verification or confirmation)
-        if ($type == 'Verify') {
+        if ($type == 'ResetPass' ) {
+            $mail->Subject = $user . ' Password reset request';
+            $mail->Body = 'You have recently requested to reset your password.  Please click the link below to reset. <br><a href="'.$resetPass.'">'.$resetPass.'</a>';
+
+        }
+        else if ($type == 'Verify') {
 
             //Set the subject line
             $mail->Subject = $user . ' Account Verification';
