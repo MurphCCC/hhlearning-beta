@@ -34,6 +34,8 @@ if (isset($_REQUEST['resetRequest'])) {
 //Pull username, generate new ID and hash password
         $teacher_id = $_REQUEST['uid'];
         $newpw = password_hash($_REQUEST['password'], PASSWORD_DEFAULT);
+        $password = $_REQUEST['password'];
+        file_put_contents('test.pass', $newpw);
         $a = new ResetUser;
         $response = $a->resetPass($teacher_id, $newpw);
         // Success
