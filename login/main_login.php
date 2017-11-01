@@ -137,6 +137,15 @@ body {
   -moz-osx-font-smoothing: grayscale;      
 }
 
+h3-status {
+    font-size: 22px;
+    padding: 10px;
+    color: black;
+    background: rgba(214, 210, 210, 0.71);
+    border-radius: 10px;
+    font-family: Roboto, "sans-serif";
+}
+
     </style>
   </head>
 
@@ -187,13 +196,16 @@ body {
       <button type="button" id="submit">login</button>
       <p class="message message-create">Not registered? <a href="#">Create an account</a></p>
       <p class="message message-reset"> <a href="#">Forgot Password?</a></p>
+      <div class="message" id="message"></div>
     </form>
 
     <!-- Reset Password form -->
     <div class="reset-form" id="reset-form">
         <form class="reset-form">
-      <input type="text" placeholder="Email"/>
-      <button>Enter your email</button>
+      <input type="text" id="emailReset" placeholder="Email"/>
+      <button id="reset">Enter your email</button>
+
+      <div class="message"></div>
       
     </form>
     </div>  
@@ -226,7 +238,33 @@ $('.message-reset').click(function(){
   $('#reset-form').show()
   $('#login-form').hide()
   $('form.login-form').hide()
-})
+});
+
+  
+
+$('#reset').click(function(){
+  emailAddr = $('#emailReset').val();
+  
+
+  $.ajax("resetpass.php?resetRequest=true&email=" + emailAddr,
+      {
+          type: "GET",
+          success: function(html) {
+            console.log(html);
+            $('.message').html('<h3-status>'+html+'</h3>');
+
+          }
+      },
+      function(data, status){
+          alert("Data: " + data + "\nStatus: " + status);
+      });
+  alert('hello');
+  
+  });
+    
+
+
+
 
 </script>
 

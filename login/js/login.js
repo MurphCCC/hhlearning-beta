@@ -1,8 +1,9 @@
 $(document).ready(function () {
     "use strict";
     $("#submit").click(function () {
-
+        alert('clicked me');
         var username = $("#myusername").val(), password = $("#mypassword").val();
+        alert(username + password);
 
         if ((username === "") || (password === "")) {
             $("#message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
