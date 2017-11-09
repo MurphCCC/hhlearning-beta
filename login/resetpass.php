@@ -24,16 +24,16 @@ if (isset($_REQUEST['resetRequest'])) {
 
     // Send verification email
         $m = new MailSender;
-        
+
         $m->sendMail($t->email, $t->username, $t->hash, 'ResetPass');
             echo 'Email sent';
             die();
 
-        
-} else if (isset($_REQUEST['password'])) {
+
+} else if (isset($_REQUEST['pw'])) {
 //Pull username, generate new ID and hash password
         $teacher_id = $_REQUEST['uid'];
-	$newpw = password_hash($_REQUEST['password'], PASSWORD_DEFAULT);
+        $newpw = password_hash($_REQUEST['pw'], PASSWORD_DEFAULT);
         $a = new ResetUser;
         $response = $a->resetPass($teacher_id, $newpw);
         // Success
@@ -184,7 +184,7 @@ body {
   background: linear-gradient(to left, #396ea8, #396ea8);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h3-status {
@@ -202,23 +202,48 @@ h3-status {
   <body>
 
     <div class="login-page">
-  
-        <div class="form" id="form">
+
+        <div id="form">
             <img src="https://hhlearning.com/wp-content/uploads/2017/04/cropped-HH-Logo.png" width="100px" height="100px"></img><h2>Hilger Grades</h2>
-            <form class="form" method="POST" action="">
+            <form class="form">
             <input type="password" name="password" id="password" placeholder="Enter your new Password"/>
-            <input type="hidden" name="uid" value="<?php echo $_REQUEST['uid']; ?>"/> 
-            <button type="submit" name="submit" value="submit">Reset</button>
+            <input type="hidden" id="uid" name="uid" value="<?php echo $_REQUEST['uid']; ?>"/>
+            <button id="submitform" name="submitform" value="submit">Reset</button>
 
 
                 <div class="message"></div>
-      
+
             </form>
-        </div>  
+        </div>
     </div>
 
 </body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+<script>
+    $('#submitform').click(function(e){
+    e.preventDefault();
+    pw = $('#password').val();
+    uid = $('#uid').val();
+    alert(pw + uid);
+
+  
+
+  $.ajax("resetpass.php?r1=true&pw=" + pw + "&uid=" + uid,
+      {
+          type: "POST",
+          success: function(html) {
+            console.log(html);
+            $('.message').html('<h3-status>'+html+'</h3>');
+
+          }
+      },
+      function(data, status){
+          alert("Data: " + data + "\nStatus: " + status);
+      });
+  
+  });
+</script>
 </html>
-
-
-
