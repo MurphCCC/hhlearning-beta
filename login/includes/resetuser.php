@@ -18,7 +18,7 @@ Class ResetUser extends DbConn
                 $vstmt->bindParam(':pass', $pass);
                 $vstmt->execute();
 
-                echo 'Password successfully reset';
+                echo '<h2 class="successMessage">Password successfully reset. <br /> Click <a href="//grades.hhlearning.com"> Here</a> to login</h2>';
                 $vdb = null;
                 $vstmt = null;
                 die();

@@ -133,7 +133,7 @@ h2 {
 }
 .form .message {
   margin: 15px 0 0;
-  color: #b3b3b3;
+  color: #3a6ea8;
   font-size: 12px;
 }
 .form .message a {
@@ -196,6 +196,12 @@ h3-status {
     font-family: Roboto, "sans-serif";
 }
 
+h2.successMessage {
+    background: rgba(192, 192, 192, 0.77);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
     </style>
   </head>
 
@@ -203,7 +209,7 @@ h3-status {
 
     <div class="login-page">
 
-        <div id="form">
+        <div class="form" id="form">
             <img src="https://hhlearning.com/wp-content/uploads/2017/04/cropped-HH-Logo.png" width="100px" height="100px"></img><h2>Hilger Grades</h2>
             <form class="form">
             <input type="password" name="password" id="password" placeholder="Enter your new Password"/>
@@ -227,7 +233,6 @@ h3-status {
     e.preventDefault();
     pw = $('#password').val();
     uid = $('#uid').val();
-    alert(pw + uid);
 
   
 
@@ -236,12 +241,11 @@ h3-status {
           type: "POST",
           success: function(html) {
             console.log(html);
-            $('.message').html('<h3-status>'+html+'</h3>');
+            $('.message').html(html);
 
           }
       },
       function(data, status){
-          alert("Data: " + data + "\nStatus: " + status);
       });
   
   });

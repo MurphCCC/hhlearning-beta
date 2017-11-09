@@ -6,19 +6,19 @@ require 'db-config.php';
 include('functions.php');
 // Get our teacher's information from the database, we will use this for all the students courses.
 $sql = 'SELECT `username`, `first_name`, `last_name` FROM `teachers` WHERE `teacher_id` = :id';
-$sql2 = 'SELECT `student_id` FROM `courses` WHERE `teacher_id` = :id';
+$sql2 = 'SELECT DISTINCT `student_id` FROM `courses` WHERE `teacher_id` = :id';
 
 $stmt = $db_con->prepare($sql);
 $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
 $stmt->execute();
 $t =  $stmt->fetchObject();
 
-$stmt = $db_con->prepare($sql2);
-$stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
-$stmt->execute();
-$s =  $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt2 = $db_con->prepare($sql2);
+$stmt2->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
+$stmt2->execute();
+$students =  $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($s);
+
 if (!isset($_SESSION['username'])) {
     header("location:login/main_login.php");
 }

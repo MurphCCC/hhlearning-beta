@@ -1,4 +1,3 @@
-<?php
 //Pull '$base_url' and '$signin_url' from this file
 include 'globalcon.php';
 //Pull database configuration from this file
