@@ -1,6 +1,10 @@
 <?php
 session_start();
+var_dump($_SESSION);
+
+
 $mode = $_SESSION['admin_mode'];
+$is_admin = $_SESSION['is_admin'];
 
 if (!isset($_SESSION['admin_mode'])) {
   $_SESSION['admin_mode'] = 'teacher';
@@ -8,6 +12,7 @@ if (!isset($_SESSION['admin_mode'])) {
 }
 
 function toggle() {
+
   if ($_SESSION['admin_mode'] === 'admin') {
     $_SESSION['admin_mode'] = 'teacher';
   } else {
@@ -20,11 +25,17 @@ if (isset($_REQUEST['toggleAdminMode'])) {
 
   function admin_mode() {
   	global $mode;
-  	if (isset($mode) && $mode === 'admin') {
-  		return 'Administrator Mode';
-  	} elseif (isset($mode) && $mode === 'teacher') {
-  		return 'Teacher Mode';
-  	}
+    if(isset($mode)) {
+        if (isset($mode) && $mode === 'admin') {
+      return 'Administrator Mode';
+    } elseif (isset($mode) && $mode === 'teacher') {
+      return 'Teacher Mode';
+    } 
+    }
+    else {
+      return 'Teacher Mode';
+    }
+
   }
 
 
