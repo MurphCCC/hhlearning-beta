@@ -96,7 +96,10 @@ echo '
 							<!-- Configure options for teacher\'s drop down menu here.  Maybe add toggle adming mode link -->
 							<ul class="dropdown-menu animation-dock">
 								<li class="dropdown-header">Config</li>
-								<li><a href="#" id="admin-toggle">Toggle Admin Mode</a></li>
+								
+								';if ($_SESSION['is_admin'] == 1) {
+									echo '<li><a href="#" id="admin-toggle">Toggle Admin Mode</a></li>';
+								} echo'
 								<li><a href="login/logout.php"><i class="fa fa-fw fa-power-off text-danger"></i> Logout</a></li>
 							</ul><!--end .dropdown-menu -->
 						</li><!--end .dropdown -->
