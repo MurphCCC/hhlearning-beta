@@ -242,9 +242,9 @@ $('input').keyup(function() {
 
       var form = '<div class="row"><div id="sections"><div class="section"><div class="col-lg-offset-1 col-md-10 col-sm-6" ><div class="card"><div class="card-body">';
       form += '<form class="allforms" method="POST" action="">';
-      form += 'Grade<input class="form-control" type="text" name="grade" value="90"></input>';
-      form += 'Course<input class="form-control" type="text" name="course_name" value="Science"></input>';
-      form += 'Feedback<textarea class="form-control" name="feedback">jhakdfhka fhjka kflj dakjf as</textarea>';
+      form += 'Grade<input class="form-control" type="text" name="grade" value=""></input>';
+      form += 'Course<input class="form-control" type="text" name="course_name" value=""></input>';
+      form += 'Feedback<textarea class="form-control" name="feedback"></textarea>';
       form += '<input class="form-control" type="hidden" name="student_id" value="'+student_id+'"></input>';
       //If we are in teacher mode, append hidden input with teacher's id
       if (mode === 'teacher') {
@@ -274,7 +274,7 @@ $('input').keyup(function() {
         // Populate dropdown with list of provinces
         $.getJSON(url, function (data) {
           $.each(data, function (key, entry) {
-            alert(entry.teacher_id);
+
             dropdown.append($('<option></option>').attr('value', entry.teacher_id).text(entry.first_name + ' ' + entry.last_name));
           })
         });
