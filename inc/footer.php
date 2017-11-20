@@ -229,8 +229,10 @@ $('input').keyup(function() {
                 url: "inc/testFormProcess.php"
                 }
             )
+		//This line of code will load our submitted form back into the div
+	        $(".section-body").load(location.href+" .section-body>*","");
+
         });
-        window.location.reload();
     });
 });
 
