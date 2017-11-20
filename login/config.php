@@ -36,6 +36,7 @@ $active_email = 'Your new account is now active! Click this link to log in!';//A
 $signupthanks = 'Thank you for signing up! You will receive an email shortly confirming the verification of your account.';
 $activemsg = 'Your account has been verified! You may now login at <br><a href="'.$signin_url.'">'.$signin_url.'</a>';
 
+$passwordResetSuccess = 'Your password has been successfully reset. /n Click <a href="//grades.hhlearning.com">Here</a> to login';
 //DO NOT TOUCH BELOW THIS LINE
 //Unsets $admin_email based on various conditions (left blank, not valid email, etc)
 if (trim($admin_email, ' ') == '') {
