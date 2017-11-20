@@ -59,7 +59,7 @@ $teachers = $st->fetchAll(PDO::FETCH_ASSOC);
 
                     $first = $student['first_name'];
                     $last = $student['last_name'];
-                    echo "Enter " . $first . ' ' . $last . " information below and click Save";
+                    echo "<p class='lead'>Enter <strong>" . $first . ' ' . $last . "'s</strong> information below and click Save</p>";
                   };
                 }   else {
                   echo 'Please add a course below';
