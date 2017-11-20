@@ -1,7 +1,5 @@
 <?php
 session_start();
-var_dump($_SESSION);
-
 
 $mode = $_SESSION['admin_mode'];
 $is_admin = $_SESSION['is_admin'];
