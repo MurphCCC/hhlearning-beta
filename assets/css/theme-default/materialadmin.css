@@ -7972,3 +7972,21 @@ li.L8 {
 }
 /* Alternate shading for lines */
 
+.controls {
+    position: relative;
+}
+
+button.btn.btn-info.addsection {
+    position: absolute;
+    right: 7vw;
+}
+
+button#allsubmit {
+    position: absolute;
+    right: 17vw;
+}
+
+p.lead {
+    text-align: center;
+    font-weight: 500;
+}
