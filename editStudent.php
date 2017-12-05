@@ -1,6 +1,4 @@
 <?php
-
-
 require 'inc/header.php';
 require 'inc/db-config.php';
 /*  In administrator mode a teacher has access to edit all courses for a given student regardless of whether they are the assigned teacher or not.  In teacher mode a teacher will only have access to the courses they are assigned to.  This allows for an admin user to go back and make changes for other teachers.
@@ -12,6 +10,7 @@ if ($_SESSION['admin_mode'] === 'teacher') {
   $stmt->bindParam(':tid', $_SESSION['teacher_id'], PDO::PARAM_INT);
   $stmt->bindParam(':sid', $_REQUEST['student_id'], PDO::PARAM_STR);
   $stmt->execute();
+
   $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } else if ($_SESSION['admin_mode'] === 'admin') {
   // $sql = 'SELECT * FROM `courses` WHERE `student_id` = :sid';
