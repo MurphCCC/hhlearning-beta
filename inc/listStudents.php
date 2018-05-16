@@ -2,7 +2,8 @@
 
 require 'db-config.php';
 
-$sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students` LIMIT 500';
+//$sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students`';
+$sql = 'SELECT * FROM students';
 $stmt = $db_con->prepare($sql);
 $stmt->execute();
 // $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);
@@ -25,7 +26,7 @@ if (isset($_POST)) {
 
   require 'db-config.php';
 
-  $sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students` LIMIT 500';
+  $sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students`';
   $stmt = $db_con->prepare($sql);
   $stmt->execute();
   // $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);

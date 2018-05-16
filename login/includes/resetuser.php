@@ -13,7 +13,7 @@ Class ResetUser extends DbConn
                 $verr = '';
 
             // prepare sql and bind parameters
-            $vstmt = $vdb->conn->prepare('UPDATE '.$tbl_members.' SET password = :pass WHERE hash = :uid');
+            $vstmt = $vdb->conn->prepare('UPDATE teachers SET password = :pass WHERE hash = :uid');
                 $vstmt->bindParam(':uid', $uid);
                 $vstmt->bindParam(':pass', $pass);
                 $vstmt->execute();

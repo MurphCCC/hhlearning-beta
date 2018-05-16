@@ -162,9 +162,9 @@ h3-status {
       <input type="password" name="password1" id="password1" placeholder="Password" required/>
       <input type="password" name="password2" id="password2" placeholder="Repeat Password" required/>
       <input type="text" name="email" id="email" placeholder="Email Address" required/>
-      <button id="sign_submit" name="sign_submit">create</button>
+      <button id="submit" name="submit">create</button>
       <p class="message message-signin">Already registered? <a href="#">Sign In</a></p>
-        <div id="create_message"></div>
+        <div id="message"></div>
     </form>
     <!-- End Registration Form -->
 
@@ -206,7 +206,7 @@ h3-status {
       <input type="text" id="emailReset" placeholder="Email"/>
       <button id="reset">Enter your email</button>
 
-      <div class="login_message"></div>
+      <div class="message"></div>
       
     </form>
     </div>  

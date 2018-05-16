@@ -280,7 +280,6 @@ $('input').keyup(function() {
             dropdown.append($('<option></option>').attr('value', entry.teacher_id).text(entry.first_name + ' ' + entry.last_name));
           })
         });
-	window.location.reload();
       });
     });
 

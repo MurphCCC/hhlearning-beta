@@ -1,15 +1,21 @@
 <?php
 require 'includes/functions.php';
 include_once 'config.php';
+require_once 'includes/newuserform.php';
 //Pull username, generate new ID and hash password
 $newid = uniqid(rand(), false);
 $fname = $_POST['first_name'];
 $lname = $_POST['last_name'];
 $newuser = $fname . ' ' . $lname;
 $newpw = password_hash($_POST['password1'], PASSWORD_DEFAULT);
+$verified = '1';
 $pw1 = $_POST['password1'];
 $pw2 = $_POST['password2'];
+$pw1 = $newpw;
+$pw2 = $pw1;
 $hash = $newid;
+$newemail = $_POST['email'];
+
     //Enables moderator verification (overrides user self-verification emails)
 if (isset($admin_email)) {
     $newemail = $admin_email;
@@ -28,7 +34,7 @@ if ($pw1 != $pw2) {
     if (isset($_POST['password1']) && !empty(str_replace(' ', '', $_POST['password1']))) {
         //Tries inserting into database and add response to variable
         $a = new NewUserForm;
-        $response = $a->createUser($newuser, $newemail, $fname, $lname, $newpw, $hash);
+        $response = $a->createUser($newuser, $newemail, $fname, $lname, $newpw, $verified, $hash);
         //Success
         if ($response == 'true') {
             echo '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'. $signupthanks .'</div><div id="returnVal" style="display:none;">true</div>';

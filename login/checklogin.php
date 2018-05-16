@@ -1,7 +1,6 @@
 <?php
 //DO NOT ECHO ANYTHING ON THIS PAGE OTHER THAN RESPONSE
 //'true' triggers login success
-ob_start();
 include 'config.php';
 require 'includes/functions.php';
 
@@ -55,4 +54,3 @@ if ($lastAttempt['attempts'] < $max_attempts && $response != 'true') {
 }
 
 unset($resp, $jsonResp);
-ob_end_flush();

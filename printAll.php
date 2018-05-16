@@ -115,8 +115,6 @@ class PDF extends FPDF
         }
     }
 
-if (isset($_REQUEST['print']) && $_REQUEST['print'] === 'all')
-    {
 
     // Select all students from and courses from the database, put the courses in order of student id and bring in teacher names as well
 
@@ -131,32 +129,9 @@ if (isset($_REQUEST['print']) && $_REQUEST['print'] === 'all')
             students.student_id AS sId
                 FROM courses 
                     INNER JOIN teachers on courses.teacher_id = teachers.teacher_id
-                    INNER JOIN students on courses.student_id = students.student_id
-                        ORDER BY students.last_name");
+                    INNER JOIN students on courses.student_id = students.student_id  
+			ORDER BY `sLast` ASC, `sId`");
     $statement->execute();
-    }
-  else
-    {
-    $statement = $db_con->prepare("SELECT teachers.first_name AS tFirst, 
-            teachers.last_name AS tLast, 
-            courses.course_name AS cName, 
-            courses.id AS cId, 
-            courses.grade AS cGrade, 
-            courses.feedback AS cFeedback, 
-            students.first_name AS sFirst,
-            students.last_name AS sLast,
-            students.student_id AS sId
-                FROM courses 
-                    INNER JOIN teachers on courses.teacher_id = teachers.teacher_id
-                    INNER JOIN students on courses.student_id = students.student_id
-                        WHERE courses.student_id = :student_id
-                            ORDER BY courses.student_id");
-    $statement->bindParam(':student_id', $_REQUEST['print'], PDO::PARAM_STR);
-    $statement->execute();
-
-    // var_dump($_REQUEST);
-
-    }
 
 // $statement->execute(array(':student_id' => 0));
 
@@ -165,10 +140,8 @@ $pdf = new PDF();
 
 if ($student)
     {
-
     // Set an initial variable for our student id.  We will check this on each iteration of the foreach loop to determine if we need to move
     // onto the next student or not.  We update this at the end of each iteration using the current student_id.
-
     $current_student = $student[0]['sId'];
     $pdf->customAddPage();
     $pass = 0;
@@ -191,6 +164,7 @@ if ($student)
                 $i = 1;
                 $pdf->Ln(1);
                 }
+            $pass++;
 
             $pdf->Ln(5);
 
@@ -269,7 +243,6 @@ if ($student)
                 };
             };
         $pdf->setPageNumber(1); //Reset page counter
-            $pass++;
         }
     }
 

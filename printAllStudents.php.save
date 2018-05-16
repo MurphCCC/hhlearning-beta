@@ -42,9 +42,9 @@ class PDF extends FPDF
             $this->Cell(80);
             $this->Cell(30, 8, 'Hilger Higher Learning, Inc.', 0, 1, 'C');
             $this->Cell(80);
-            $this->Cell(30, 8, '412 East and West Road', 0, 1, 'C');
+            $this->Cell(30, 8, '412 East and', 0, 1, 'C');
             $this->Cell(80);
-            $this->Cell(30, 8, 'Lookout Mountain, TN 37350', 0, 1, 'C');
+            $this->Cell(30, 8, 'Lookout Mountain, GA 30750', 0, 1, 'C');
             $this->Cell(80);
             $this->Cell(30, 8, 'www.hhlearning.com', 0, 1, 'C');
 

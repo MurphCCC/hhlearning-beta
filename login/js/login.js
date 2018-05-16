@@ -4,7 +4,7 @@ $(document).ready(function () {
         var username = $("#myusername").val(), password = $("#mypassword").val();
 
         if ((username === "") || (password === "")) {
-            $("#message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
+            $("#login_message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
         } else {
             $.ajax({
                 type: "POST",
@@ -18,7 +18,7 @@ $(document).ready(function () {
                        location.reload();
                         return html.username;
                     } else {
-                        $("#message").html(html.response);
+                        $("#login_message").html(html.response);
                     }
                 },
                 error: function (textStatus, errorThrown) {
@@ -26,7 +26,7 @@ $(document).ready(function () {
                     console.log(errorThrown);
                 },
                 beforeSend: function () {
-                    $("#message").html("<p class='text-center'><img src='images/ajax-loader.gif'></p>");
+                    $("#login_message").html("<p class='text-center'><img src='images/ajax-loader.gif'></p>");
                 }
             });
         }

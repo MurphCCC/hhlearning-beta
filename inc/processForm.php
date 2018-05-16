@@ -19,7 +19,7 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'deleteStudent') {
     $q->bindValue(':id', $_REQUEST['student_id']);
     $q->execute();
 
-    $sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students` LIMIT 500';
+    $sql = 'SELECT `first_name`, `last_name`, `student_id` FROM `students`';
 $stmt = $db_con->prepare($sql);
 $stmt->execute();
 // $stmt->bindParam(':id', $_SESSION['teacher_id'], PDO::PARAM_INT);

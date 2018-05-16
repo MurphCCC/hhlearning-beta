@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
-  $("#submit").click(function(){
+  $("button#sign_submit").click(function(){
 
-    var username = $("#newuser").val();
+    var username = $("#first_name").val() + $("#last_name").val();
     var password = $("#password1").val();
     var password2 = $("#password2").val();
     var email = $("#email").val();
@@ -10,7 +10,7 @@ $(document).ready(function(){
     var last_name = $("#last_name").val();
 
     if((username == "") || (password == "") || (email == "")) {
-      $("#message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
+      $("#create_message").html("<div class=\"alert alert-danger alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>Please enter a username and a password</div>");
     }
     else {
       $.ajax({
@@ -25,18 +25,18 @@ $(document).ready(function(){
 
           if(response == "true"){
 
-			$("#message").html(html);
+			$("#create_message").html(html);
 
 					$('#submit').hide();
 			}
 		else {
-			$("#message").html(html);
+			$("#create_message").html(html);
 			$('#submit').show();
 			}
         },
         beforeSend: function()
         {
-          $("#message").html("<p class='text-center'><img src='images/ajax-loader.gif'></p>")
+          $("#create_message").html("<p class='text-center'><img src='images/ajax-loader.gif'></p>")
         }
       });
     }
